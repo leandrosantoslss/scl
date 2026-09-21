@@ -183,6 +183,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
     (os.path.join('vendor', 'duralux'), BASE_DIR / 'design_system' / 'refs' / 'duralux'),
 ]
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = DEBUG
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
