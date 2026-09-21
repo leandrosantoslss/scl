@@ -2,19 +2,20 @@
 {% load static %}
 
 {% block body %}
-<div class="wrapper">
-    {% include "partials/_sidebar.html" %}
-    {% include "partials/_topbar.html" %}
-    <main class="nxl-container">
-        <div class="nxl-content">
-            <header class="page-header">
-                <h1 class="page-title">{% block page_title %}{% endblock %}</h1>
-            </header>
-            <div class="main-content">
-                {% include "partials/_messages.html" %}
-                {% block content %}{% endblock %}
+{% include "partials/_sidebar.html" %}
+{% include "partials/_topbar.html" %}
+<main class="nxl-container">
+    <div class="nxl-content">
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h4 class="default-fs">{% block page_title %}{% endblock %}</h4></div>
             </div>
         </div>
-    </main>
-</div>
+        <div class="main-content">
+            {% include "partials/_messages.html" %}
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</main>
 {% endblock %}
