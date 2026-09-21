@@ -1,0 +1,22 @@
+/* Portal-specific layout adjustments on top of Duralux. */
+
+.auth-wrapper {
+    background-color: var(--scl-color-background);
+}
+
+.auth-card {
+    border: none;
+    border-radius: var(--scl-border-radius);
+}
+
+.page-header {
+    padding: var(--scl-spacing-unit) 0;
+}
+
+.main-content {
+    padding: var(--scl-spacing-unit);
+}
+
+.logo-full {
+    max-height: 40px;
+}

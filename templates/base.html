@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}SCL{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'vendor/duralux/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/duralux/css/vendors.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/duralux/css/theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+    <script src="{% static 'vendor/duralux/js/vendors.min.js' %}"></script>
+    <script src="{% static 'vendor/duralux/js/common-init.min.js' %}"></script>
+    <script src="{% static 'js/portal.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% load static %}
+<aside class="sidebar" aria-label="Navegação principal">
+    <div class="sidebar-brand">
+        <a href="{% url 'portal:home' %}">
+            <img src="{% static 'vendor/duralux/images/logo-full.png' %}" alt="SCL - Sistema de Controle de Licenças" class="logo-full">
+        </a>
+        <img src="{% static 'vendor/duralux/images/logo-abbr.png' %}" alt="SCL" class="logo-abbr">
+    </div>
+    <nav class="sidebar-nav">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'portal:home' %}">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'licencas:cliente-list' %}">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'licencas:sistema-list' %}">Sistemas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'licencas:assinatura-list' %}">Assinaturas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'financeiro:cobranca-list' %}">Cobranças</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'integracoes:list' %}">Integrações</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if 'audit' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'portal:audit_list' %}">
+                    Auditoria
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>

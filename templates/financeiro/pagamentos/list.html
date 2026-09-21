@@ -1,0 +1,24 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Pagamentos{% endblock %}
+{% block page_title %}Pagamentos{% endblock %}
+
+{% block content %}
+<table class="table table-hover">
+    <thead><tr><th>Cobrança</th><th>Pago em</th><th>Valor</th><th>Forma</th><th>Origem</th><th>Status</th></tr></thead>
+    <tbody>
+        {% for pagamento in page.object_list %}
+            <tr>
+                <td><a href="{% url 'financeiro:cobranca-detail' pagamento.cobranca_id %}">{{ pagamento.cobranca.competencia }}</a></td>
+                <td>{{ pagamento.pago_em }}</td>
+                <td>R$ {{ pagamento.valor }}</td>
+                <td>{{ pagamento.forma }}</td>
+                <td>{{ pagamento.origem }}</td>
+                <td>{{ pagamento.get_status_display }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="6">Nenhum pagamento.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

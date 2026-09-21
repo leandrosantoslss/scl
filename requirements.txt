@@ -1,0 +1,12 @@
+Django>=5.2,<5.3
+cryptography>=45,<47
+django-environ>=0.12,<0.13
+django-jazzmin>=3.0,<4
+djangorestframework>=3.16,<3.17
+django-oauth-toolkit>=3.0,<4
+psycopg[binary]>=3.2,<4
+pytest>=8,<9
+pytest-django>=4.11,<5
+python-dateutil>=2.9,<3
+python-stdnum>=1.20,<2
+PyYAML>=6,<7

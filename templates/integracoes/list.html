@@ -1,0 +1,30 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Integrações{% endblock %}
+{% block page_title %}Integrações legadas{% endblock %}
+
+{% block content %}
+<a class="btn btn-primary btn-sm mb-2" href="#" onclick="document.getElementById('form-novo').submit();return false;">Nova integração</a>
+<form id="form-novo" method="post" action="{% url 'integracoes:create' %}" class="d-none">
+    {% csrf_token %}
+</form>
+
+<table class="table table-hover">
+    <thead><tr><th>Nome</th><th>Situação</th><th>Último uso</th><th></th></tr></thead>
+    <tbody>
+        {% for integracao in integracoes %}
+            <tr>
+                <td><a href="{% url 'integracoes:detail' integracao.pk %}">{{ integracao.nome }}</a></td>
+                <td>{{ integracao.ativo|yesno:'Ativo,Inativo' }}</td>
+                <td>{{ integracao.ultimo_uso_em|default:"-" }}</td>
+                <td>
+                    <form method="post" action="{% url 'integracoes:revoke' integracao.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger btn-sm">Revogar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

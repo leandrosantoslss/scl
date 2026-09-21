@@ -1,0 +1,49 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Assinatura{% endblock %}
+{% block page_title %}{{ assinatura.cliente }} - {{ assinatura.sistema }}{% endblock %}
+
+{% block content %}
+<dl class="row">
+    <dt class="col-sm-3">Cliente</dt><dd class="col-sm-9">{{ assinatura.cliente }}</dd>
+    <dt class="col-sm-3">Sistema</dt><dd class="col-sm-9">{{ assinatura.sistema }}</dd>
+    <dt class="col-sm-3">Valor</dt><dd class="col-sm-9">R$ {{ assinatura.valor_recorrente }}</dd>
+    <dt class="col-sm-3">Periodicidade</dt><dd class="col-sm-9">{{ assinatura.get_periodicidade_display }}</dd>
+    <dt class="col-sm-3">Início</dt><dd class="col-sm-9">{{ assinatura.data_inicio }}</dd>
+    <dt class="col-sm-3">Primeiro vencimento</dt><dd class="col-sm-9">{{ assinatura.primeiro_vencimento }}</dd>
+    <dt class="col-sm-3">Situação</dt><dd class="col-sm-9">{% if assinatura.bloqueado %}Bloqueada{% elif not assinatura.ativo %}Inativa{% else %}Ativa{% endif %}</dd>
+    {% if assinatura.bloqueado %}
+        <dt class="col-sm-3">Motivo</dt><dd class="col-sm-9">{{ assinatura.motivo_bloqueio }}</dd>
+    {% endif %}
+</dl>
+
+{% if perms.licencas.change_clientesistema %}
+    <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-secondary btn-sm" href="{% url 'licencas:assinatura-list' %}">Voltar</a>
+        {% if assinatura.ativo %}
+            <form method="post" action="{% url 'licencas:assinatura-desativar' assinatura.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="motivo" value="encerrado">
+                <button class="btn btn-outline-danger btn-sm" type="submit">Desativar</button>
+            </form>
+            {% if not assinatura.bloqueado %}
+                <form method="post" action="{% url 'licencas:assinatura-bloquear' assinatura.pk %}">
+                    {% csrf_token %}
+                    <input type="text" name="motivo" placeholder="Motivo">
+                    <button class="btn btn-outline-warning btn-sm" type="submit">Bloquear</button>
+                </form>
+            {% else %}
+                <form method="post" action="{% url 'licencas:assinatura-desbloquear' assinatura.pk %}">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success btn-sm" type="submit">Desbloquear</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <form method="post" action="{% url 'licencas:assinatura-ativar' assinatura.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-sm" type="submit">Ativar</button>
+            </form>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Auditoria{% endblock %}
+{% block page_title %}Evento {{ evento.acao }}{% endblock %}
+
+{% block content %}
+<dl class="row">
+    <dt class="col-sm-3">Data</dt>
+    <dd class="col-sm-9">{{ evento.criado_em }}</dd>
+
+    <dt class="col-sm-3">Ação</dt>
+    <dd class="col-sm-9">{{ evento.acao }}</dd>
+
+    <dt class="col-sm-3">Objeto</dt>
+    <dd class="col-sm-9">{{ evento.objeto_tipo }} {{ evento.objeto_id }}</dd>
+
+    <dt class="col-sm-3">Origem</dt>
+    <dd class="col-sm-9">{{ evento.get_origem_display }}</dd>
+
+    <dt class="col-sm-3">Motivo</dt>
+    <dd class="col-sm-9">{{ evento.motivo|default:"-" }}</dd>
+
+    <dt class="col-sm-3">Antes</dt>
+    <dd class="col-sm-9"><pre>{{ evento.antes|default:"-"|pprint }}</pre></dd>
+
+    <dt class="col-sm-3">Depois</dt>
+    <dd class="col-sm-9"><pre>{{ evento.depois|default:"-"|pprint }}</pre></dd>
+</dl>
+<a class="btn btn-secondary btn-sm" href="{% url 'portal:audit_list' %}">Voltar</a>
+{% endblock %}

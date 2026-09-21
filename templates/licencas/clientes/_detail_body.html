@@ -1,0 +1,16 @@
+<dl class="row">
+    <dt class="col-sm-3">Nome</dt><dd class="col-sm-9">{{ cliente.nome }}</dd>
+    <dt class="col-sm-3">CNPJ/CPF</dt><dd class="col-sm-9">{{ cliente.cnpjcpf }}</dd>
+    <dt class="col-sm-3">Email</dt><dd class="col-sm-9">{{ cliente.email }}</dd>
+    <dt class="col-sm-3">Cidade</dt><dd class="col-sm-9">{{ cliente.endcidade }}</dd>
+    <dt class="col-sm-3">Situação</dt><dd class="col-sm-9">{% if cliente.bloqueado %}Bloqueado{% elif not cliente.ativo %}Inativo{% else %}Ativo{% endif %}</dd>
+    {% if cliente.bloqueado %}
+        <dt class="col-sm-3">Motivo</dt><dd class="col-sm-9">{{ cliente.motivo_bloqueio }}</dd>
+    {% endif %}
+</dl>
+<div class="d-flex gap-2">
+    <a class="btn btn-secondary btn-sm" href="{% url 'licencas:cliente-list' %}">Voltar</a>
+    {% if perms.licencas.change_cliente %}
+        <a class="btn btn-primary btn-sm" href="{% url 'licencas:cliente-update' cliente.pk %}">Editar</a>
+    {% endif %}
+</div>

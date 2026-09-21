@@ -1,0 +1,20 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Cancelar cobrança{% endblock %}
+{% block page_title %}Cancelar cobrança {{ cobranca.competencia }}{% endblock %}
+
+{% block content %}
+<div class="alert alert-warning" role="alert">
+    Esta ação cancela a cobrança de origem SCL e remove seu saldo do licenciamento. É auditada.
+</div>
+<form method="post" class="row g-3" style="max-width: 480px">
+    {% csrf_token %}
+    <div class="col-12">{{ form.motivo }}</div>
+    {% for error in form.motivo.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+    {% for error in form.non_field_errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+    <div class="col-12">
+        <a class="btn btn-secondary btn-sm" href="{% url 'financeiro:cobranca-detail' cobranca.pk %}">Voltar</a>
+        <button class="btn btn-danger btn-sm" type="submit">Confirmar cancelamento</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Assinaturas{% endblock %}
+{% block page_title %}Assinaturas{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-2">
+    <span>{{ page.paginator.count }} assinaturas</span>
+    {% if perms.licencas.add_clientesistema %}
+        <a class="btn btn-primary btn-sm" href="{% url 'licencas:assinatura-create' %}">Nova assinatura</a>
+    {% endif %}
+</div>
+
+<table class="table table-hover">
+    <thead><tr><th>Cliente</th><th>Sistema</th><th>Valor</th><th>Periodicidade</th><th>Situação</th></tr></thead>
+    <tbody>
+        {% for assinatura in page.object_list %}
+            <tr>
+                <td><a href="{% url 'licencas:assinatura-detail' assinatura.pk %}">{{ assinatura.cliente }}</a></td>
+                <td>{{ assinatura.sistema }}</td>
+                <td>R$ {{ assinatura.valor_recorrente }}</td>
+                <td>{{ assinatura.get_periodicidade_display }}</td>
+                <td>{% if assinatura.bloqueado %}Bloqueada{% elif not assinatura.ativo %}Inativa{% else %}Ativa{% endif %}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5">Nenhuma assinatura.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

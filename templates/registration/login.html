@@ -1,0 +1,22 @@
+{% extends "base_auth.html" %}
+
+{% block title %}SCL - Entrar{% endblock %}
+
+{% block auth_content %}
+<h1 class="h4 mb-3">Entrar no SCL</h1>
+{% if form.errors %}
+    <div class="alert alert-danger" role="alert">Usuário ou senha inválidos.</div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="id_username">Usuário</label>
+        <input type="text" name="username" id="id_username" class="form-control" autofocus autocomplete="username" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="id_password">Senha</label>
+        <input type="password" name="password" id="id_password" class="form-control" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+</form>
+{% endblock %}

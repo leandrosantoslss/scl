@@ -1,0 +1,37 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Integração{% endblock %}
+{% block page_title %}{{ integracao.nome }}{% endblock %}
+
+{% block content %}
+<dl class="row">
+    <dt class="col-sm-3">Nome</dt><dd class="col-sm-9">{{ integracao.nome }}</dd>
+    <dt class="col-sm-3">client_id</dt><dd class="col-sm-9">{{ integracao.application.client_id }}</dd>
+    <dt class="col-sm-3">Escopos</dt><dd class="col-sm-9">{{ integracao.escopos|join:", " }}</dd>
+    <dt class="col-sm-3">Situação</dt><dd class="col-sm-9">{{ integracao.ativo|yesno:'Ativo,Inativo' }}</dd>
+</dl>
+
+<h2 class="h5 mt-3">Requisições recentes</h2>
+<table class="table table-sm">
+    <thead><tr><th>Método</th><th>Endpoint</th><th>Status HTTP</th><th>Concluída em</th></tr></thead>
+    <tbody>
+        {% for requisicao in requisicoes %}
+            <tr>
+                <td>{{ requisicao.metodo }}</td>
+                <td>{{ requisicao.endpoint }}</td>
+                <td>{{ requisicao.http_status|default:"-" }}</td>
+                <td>{{ requisicao.concluida_em|default:"-" }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4">Nenhuma requisição registrada.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-secondary btn-sm" href="{% url 'integracoes:list' %}">Voltar</a>
+{% if integracao.ativo %}
+<form method="post" action="{% url 'integracoes:revoke' integracao.pk %}" class="d-inline">
+    {% csrf_token %}<button class="btn btn-outline-danger btn-sm">Revogar</button>
+</form>
+{% endif %}
+{% endblock %}

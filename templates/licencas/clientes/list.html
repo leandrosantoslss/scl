@@ -1,0 +1,48 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Clientes{% endblock %}
+{% block page_title %}Clientes{% endblock %}
+
+{% block content %}
+<form method="get" class="mb-3 d-flex gap-2">
+    <input type="text" name="q" value="{{ request.GET.q|default:'' }}" class="form-control" placeholder="Nome ou documento">
+    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+</form>
+
+<div class="d-flex justify-content-between mb-2">
+    <span>{{ page.paginator.count }} clientes</span>
+    {% if perms.licencas.add_cliente %}
+        <a class="btn btn-primary btn-sm" href="{% url 'licencas:cliente-create' %}">Novo cliente</a>
+    {% endif %}
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr><th>Nome</th><th>CNPJ/CPF</th><th>Situação</th><th>Alterado em</th></tr>
+    </thead>
+    <tbody>
+        {% for cliente in page.object_list %}
+            <tr>
+                <td><a href="{% url 'licencas:cliente-detail' cliente.pk %}">{{ cliente.nome }}</a></td>
+                <td>{{ cliente.cnpjcpf }}</td>
+                <td>{% if cliente.bloqueado %}Bloqueado{% elif not cliente.ativo %}Inativo{% else %}Ativo{% endif %}</td>
+                <td>{{ cliente.alterado_em }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4">Nenhum cliente.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if page.has_other_pages %}
+    <ul class="pagination">
+        {% if page.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Anterior</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">{{ page.number }}</span></li>
+        {% if page.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Próxima</a></li>
+        {% endif %}
+    </ul>
+{% endif %}
+{% endblock %}

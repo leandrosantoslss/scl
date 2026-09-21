@@ -1,0 +1,19 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Sistema{% endblock %}
+{% block page_title %}{{ sistema.nome }}{% endblock %}
+
+{% block content %}
+<dl class="row">
+    <dt class="col-sm-3">Nome</dt><dd class="col-sm-9">{{ sistema.nome }}</dd>
+    <dt class="col-sm-3">Código</dt><dd class="col-sm-9">{{ sistema.codigo }}</dd>
+    <dt class="col-sm-3">Descrição</dt><dd class="col-sm-9">{{ sistema.descricao }}</dd>
+    <dt class="col-sm-3">Situação</dt><dd class="col-sm-9">{% if sistema.ativo %}Ativo{% else %}Inativo{% endif %}</dd>
+</dl>
+<div class="d-flex gap-2">
+    <a class="btn btn-secondary btn-sm" href="{% url 'licencas:sistema-list' %}">Voltar</a>
+    {% if perms.licencas.change_sistema %}
+        <a class="btn btn-primary btn-sm" href="{% url 'licencas:sistema-update' sistema.pk %}">Editar</a>
+    {% endif %}
+</div>
+{% endblock %}

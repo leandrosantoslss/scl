@@ -1,0 +1,9 @@
+<header class="topbar d-flex align-items-center justify-content-between">
+    <div class="topbar-title">
+        <strong>{{ user.get_username }}</strong>
+    </div>
+    <form method="post" action="{% url 'logout' %}" class="mb-0">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-secondary btn-sm">Sair</button>
+    </form>
+</header>

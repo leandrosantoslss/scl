@@ -1,0 +1,33 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="h5">Clientes</h2>
+                <p class="display-6 mb-0">{{ clientes_total }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="h5">Sistemas</h2>
+                <p class="display-6 mb-0">{{ sistemas_total }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="h5">Assinaturas</h2>
+                <p class="display-6 mb-0">{{ assinaturas_total }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

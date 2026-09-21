@@ -1,0 +1,26 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Registro de pagamento{% endblock %}
+{% block page_title %}Registrar pagamento — {{ cobranca.competencia }}{% endblock %}
+
+{% block content %}
+<form method="post" class="row g-3" style="max-width: 480px">
+    {% csrf_token %}
+    <div class="col-12">
+        <label class="form-label">Valor</label>{{ form.valor }}
+        {% for error in form.valor.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+    </div>
+    <div class="col-12">
+        <label class="form-label">Forma</label>{{ form.forma }}
+    </div>
+    <div class="col-12">
+        <label class="form-label">Pago em</label>{{ form.pago_em }}
+        {% for error in form.pago_em.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+    </div>
+    {% for error in form.non_field_errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+    <div class="col-12">
+        <a class="btn btn-secondary btn-sm" href="{% url 'financeiro:cobranca-detail' cobranca.pk %}">Cancelar</a>
+        <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Sistema{% endblock %}
+{% block page_title %}{% if form %}{% if sistema %}Editar sistema{% else %}Novo sistema{% endif %}{% else %}{{ sistema.nome }}{% endif %}{% endblock %}
+
+{% block content %}
+{% if form %}
+    <form method="post" class="row g-3">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="col-md-6">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+        {% endfor %}
+        {% for error in form.non_field_errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+        <div class="col-12">
+            <a class="btn btn-secondary btn-sm" href="{% url 'licencas:sistema-list' %}">Cancelar</a>
+            <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+        </div>
+    </form>
+{% else %}
+    <dl class="row">
+        <dt class="col-sm-3">Nome</dt><dd class="col-sm-9">{{ sistema.nome }}</dd>
+        <dt class="col-sm-3">Código</dt><dd class="col-sm-9">{{ sistema.codigo }}</dd>
+        <dt class="col-sm-3">Descrição</dt><dd class="col-sm-9">{{ sistema.descricao }}</dd>
+        <dt class="col-sm-3">Situação</dt><dd class="col-sm-9">{% if sistema.ativo %}Ativo{% else %}Inativo{% endif %}</dd>
+    </dl>
+    <div class="d-flex gap-2">
+        <a class="btn btn-secondary btn-sm" href="{% url 'licencas:sistema-list' %}">Voltar</a>
+        {% if perms.licencas.change_sistema %}
+            <a class="btn btn-primary btn-sm" href="{% url 'licencas:sistema-update' sistema.pk %}">Editar</a>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

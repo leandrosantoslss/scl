@@ -1,0 +1,23 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Estorno{% endblock %}
+{% block page_title %}Confirmar estorno{% endblock %}
+
+{% block content %}
+<form method="post" class="row g-3" style="max-width: 480px">
+    {% csrf_token %}
+    <div class="col-12">
+        <dl class="row">
+            <dt class="col-sm-4">Valor</dt><dd class="col-sm-8">R$ {{ pagamento.valor }}</dd>
+            <dt class="col-sm-4">Status atual</dt><dd class="col-sm-8">{{ pagamento.get_status_display }}</dd>
+        </dl>
+        {{ form.motivo }}
+        {% for error in form.motivo.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        {% for error in form.non_field_errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+    </div>
+    <div class="col-12">
+        <a class="btn btn-secondary btn-sm" href="{% url 'financeiro:cobranca-detail' cobranca_pk %}">Voltar</a>
+        <button class="btn btn-danger btn-sm" type="submit">Confirmar estorno</button>
+    </div>
+</form>
+{% endblock %}

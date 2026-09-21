@@ -1,0 +1,34 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Sistemas{% endblock %}
+{% block page_title %}Sistemas{% endblock %}
+
+{% block content %}
+<form method="get" class="mb-3 d-flex gap-2">
+    <input type="text" name="q" value="{{ request.GET.q|default:'' }}" class="form-control" placeholder="Nome ou código">
+    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+</form>
+
+<div class="d-flex justify-content-between mb-2">
+    <span>{{ page.paginator.count }} sistemas</span>
+    {% if perms.licencas.add_sistema %}
+        <a class="btn btn-primary btn-sm" href="{% url 'licencas:sistema-create' %}">Novo sistema</a>
+    {% endif %}
+</div>
+
+<table class="table table-hover">
+    <thead><tr><th>Nome</th><th>Código</th><th>Situação</th><th>Alterado em</th></tr></thead>
+    <tbody>
+        {% for sistema in page.object_list %}
+            <tr>
+                <td><a href="{% url 'licencas:sistema-detail' sistema.pk %}">{{ sistema.nome }}</a></td>
+                <td>{{ sistema.codigo }}</td>
+                <td>{% if not sistema.ativo %}Inativo{% else %}Ativo{% endif %}</td>
+                <td>{{ sistema.alterado_em }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4">Nenhum sistema.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

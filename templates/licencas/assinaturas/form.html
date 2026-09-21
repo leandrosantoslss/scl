@@ -1,0 +1,22 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Assinatura{% endblock %}
+{% block page_title %}{% if assinatura %}Editar assinatura{% else %}Nova assinatura{% endif %}{% endblock %}
+
+{% block content %}
+<form method="post" class="row g-3">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="col-md-6">
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        </div>
+    {% endfor %}
+    {% for error in form.non_field_errors %}<div class="text-danger w-100">{{ error }}</div>{% endfor %}
+    <div class="col-12">
+        <a class="btn btn-secondary btn-sm" href="{% url 'licencas:assinatura-list' %}">Cancelar</a>
+        <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Emissão{% endblock %}
+{% block page_title %}Emissão {{ emissao.pk }}{% endblock %}
+
+{% block content %}
+<dl class="row">
+    <dt class="col-sm-3">Cobrança</dt><dd class="col-sm-9">{{ emissao.cobranca_id }}</dd>
+    <dt class="col-sm-3">Status</dt><dd class="col-sm-9">{{ emissao.get_status_display }}</dd>
+    <dt class="col-sm-3">Erro</dt><dd class="col-sm-9">{{ emissao.erro_normalizado|default:"-" }}</dd>
+</dl>
+{% endblock %}

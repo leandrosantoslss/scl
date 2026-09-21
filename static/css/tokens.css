@@ -1,0 +1,14 @@
+:root {
+    --scl-color-primary: #4361ee;
+    --scl-color-success: #2fb344;
+    --scl-color-warning: #f59e0b;
+    --scl-color-danger: #e11d48;
+    --scl-color-surface: #ffffff;
+    --scl-color-background: #f4f6fa;
+    --scl-border-radius: 0.5rem;
+    --scl-spacing-unit: 0.5rem;
+}
+
+body {
+    background-color: var(--scl-color-background);
+}

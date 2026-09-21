@@ -1,0 +1,18 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Assinatura{% endblock %}
+{% block page_title %}Confirmação — {{ assinatura.cliente }}{% endblock %}
+
+{% block content %}
+{% if motivo_erro %}<div class="alert alert-warning" role="alert">{{ motivo_erro }}</div>{% endif %}
+<dl class="row">
+    <dt class="col-sm-3">Cliente</dt><dd class="col-sm-9">{{ assinatura.cliente }}</dd>
+    <dt class="col-sm-3">Sistema</dt><dd class="col-sm-9">{{ assinatura.sistema }}</dd>
+</dl>
+<form method="post" action="{% url 'licencas:assinatura-bloquear' assinatura.pk %}" class="mt-2 d-flex gap-2">
+    {% csrf_token %}
+    <input type="text" name="motivo" class="form-control" placeholder="Motivo do bloqueio">
+    <button class="btn btn-warning btn-sm" type="submit">Bloquear</button>
+</form>
+<a class="btn btn-secondary btn-sm mt-2" href="{% url 'licencas:assinatura-detail' assinatura.pk %}">Voltar</a>
+{% endblock %}
