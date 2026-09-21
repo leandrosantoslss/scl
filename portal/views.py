@@ -1,4 +1,4 @@
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import get_user_model, views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseNotAllowed
@@ -46,6 +46,17 @@ class PasswordResetView(auth_views.PasswordResetView):
     success_url = reverse_lazy("password_reset_done")
     email_template_name = "registration/password_reset_email.html"
     subject_template_name = "registration/password_reset_subject.txt"
+
+    def form_valid(self, form):
+        email = form.cleaned_data["email"]
+        existe = get_user_model().objects.filter(email__iexact=email).exists()
+        if not existe:
+            form.add_error(
+                None,
+                "Não encontramos este e-mail vinculado a nenhum cadastro. Verifique e tente novamente.",
+            )
+            return self.form_invalid(form)
+        return super().form_valid(form)
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):

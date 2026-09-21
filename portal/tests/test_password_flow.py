@@ -47,3 +47,16 @@ def test_password_reset_fluxo(client, mailoutbox):
     corpo = mailoutbox[0].body
     # O link de reset aparece no corpo do e-mail
     assert "/reset/" in corpo or "password-reset/confirmar" in corpo
+
+@pytest.mark.django_db
+def test_password_reset_email_desconhecido_avisa(client, db):
+    resposta = client.post(
+        reverse("password_reset"),
+        data={"email": "desconhecido@example.com"},
+    )
+    assert resposta.status_code == 200
+    conteudo = resposta.content.decode()
+    assert "não encontramos" in conteudo.lower()
+    # Formulário fica visível para nova tentativa
+    assert 'name="email"' in conteudo
+
