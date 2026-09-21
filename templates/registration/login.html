@@ -17,6 +17,16 @@
         <label class="form-label" for="id_password">Senha</label>
         <input type="password" name="password" id="id_password" class="form-control" autocomplete="current-password" required>
     </div>
+
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" name="remember_me" id="id_remember_me">
+        <label class="form-check-label" for="id_remember_me">Lembre de mim</label>
+    </div>
+
     <button type="submit" class="btn btn-primary w-100">Entrar</button>
+
+    <p class="mt-3 text-center mb-0">
+        <a href="{% url 'password_reset' %}">Esqueci minha senha</a>
+    </p>
 </form>
 {% endblock %}
