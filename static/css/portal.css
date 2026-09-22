@@ -293,3 +293,9 @@ code { color: var(--forest); font-family: "Cascadia Code", Consolas, monospace; 
     .dashboard-toolbar { width: 100%; justify-content: space-between; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+
+/* Remember-me checkbox in auth-card */
+.auth-card .form-check { margin: 4px 0 8px; }
+.auth-card .form-check-input { width: 2.2em; height: 1.25em; cursor: pointer; border-color: var(--line); background-color: #fff; box-shadow: none; }
+.auth-card .form-check-input:checked { background-color: var(--leaf); border-color: var(--leaf); }
+.auth-card .form-check-label { color: #34443a; font-size: 13px; }

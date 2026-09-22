@@ -23,6 +23,11 @@
         {{ form.password }}
         {% for error in form.password.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
 
+        <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" name="remember_me" id="id_remember_me">
+            <label class="form-check-label" for="id_remember_me">Lembre de mim</label>
+        </div>
+
         <button class="button primary" type="submit">Entrar</button>
         <input type="hidden" name="next" value="{{ next }}">
     </form>
@@ -31,4 +36,8 @@
         <a class="auth-link auth-link-reset" href="{% url 'password_reset' %}">Esqueci minha senha</a>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/enter-navigation.js' %}?v=1"></script>
 {% endblock %}

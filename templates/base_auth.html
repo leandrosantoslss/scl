@@ -4,12 +4,13 @@
 {% block body_class %}auth-body{% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/portal.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'css/lotesis-forms.css' %}?v=2">
 {% endblock %}
 {% block body %}
 <main class="auth-layout">
     <section class="auth-panel">
         <a class="brand-mark" href="{% url 'login' %}">
-            <img src="{% static 'images/logo.png' %}" alt="SCL" class="brand-logo" style="width:36px;height:36px;font-weight:700;">
+            <img src="{% static 'images/logo.png' %}" alt="SCL" class="brand-logo" style="width:36px;height:36px;">
             <span><strong>SCL</strong><small>Sistema de Controle de Licenças</small></span>
         </a>
         {% block auth_content %}{% endblock %}
