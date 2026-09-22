@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin  # noqa: F401 (contingency: default AdminSite)
+from core import views_notifications as core_views_notifications
 from django.urls import include, path
 
 from app.admin_site import admin_site
@@ -23,6 +24,11 @@ from integracoes.api.token import IntegrationTokenView
 
 urlpatterns = [
     path('health/', health, name='health'),
+    path('api/notificacoes/', core_views_notifications.notifications_api, name='notifications_api'),
+    path('api/notificacoes/<int:pk>/ler/', core_views_notifications.notification_read_api, name='notification_read'),
+    path('api/notificacoes/ler-todas/', core_views_notifications.notifications_read_all_api, name='notifications_read_all'),
+    path('api/notificacoes/excluir-todas/', core_views_notifications.notifications_delete_all_api, name='notifications_delete_all'),
+
     path('', include('portal.urls')),
     path('portal/', include(('portal.portal_urls', 'portal'), namespace='portal')),
     path('licencas/', include('licencas.urls')),

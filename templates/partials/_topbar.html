@@ -1,3 +1,4 @@
+{% load static %}
 <header class="nxl-header">
     <div class="header-wrapper">
         <div class="header-left d-flex align-items-center gap-4">
@@ -15,7 +16,8 @@
 
                 <div class="nxl-h-item fullscreen-switcher">
                     <a href="#" class="nxl-head-link me-0 fullscreen-toggle" id="fullscreen-toggle" aria-label="Tela cheia" title="Tela cheia">
-                        <i class="feather-maximize maximize"></i><i class="feather-minimize minimize"></i>
+                        <i class="feather-maximize maximize" id="fullscreen-maximize-icon"></i>
+                        <i class="feather-minimize minimize" id="fullscreen-minimize-icon"></i>
                     </a>
                 </div>
 
@@ -23,6 +25,23 @@
                     <a href="#" class="nxl-head-link me-0 theme-toggle" id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
                         <i class="feather-moon" id="theme-toggle-icon"></i>
                     </a>
+                </div>
+
+                <div class="nxl-h-item notification-wrapper">
+                    <a href="#" class="nxl-head-link me-0 notification-toggle" id="notification-toggle" aria-label="Notificações" title="Notificações">
+                        <i class="feather-bell"></i>
+                        <span class="notification-badge" id="notification-badge" hidden>0</span>
+                    </a>
+                    <div class="notification-panel" id="notification-panel" hidden>
+                        <div class="notification-panel-header d-flex align-items-center justify-content-between">
+                            <strong>Notificações</strong>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="notification-read-all" id="notification-read-all">Marcar lidas</button>
+                                <button type="button" class="notification-delete-all" id="notification-delete-all">Limpar</button>
+                            </div>
+                        </div>
+                        <div id="notification-list"><div class="text-muted small p-3">Carregando...</div></div>
+                    </div>
                 </div>
 
                 <div class="nxl-h-item topbar-dropdown" id="profile-dropdown-wrapper">

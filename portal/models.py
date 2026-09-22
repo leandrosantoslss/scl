@@ -73,3 +73,27 @@ class JanelaRateLimit(models.Model):
 
     def __str__(self):
         return f"{self.scope}/{self.key_hash[:8]}@{self.window_start:%Y%m%dT%H%M}"
+
+
+
+class Notificacao(models.Model):
+    """Notificação in-app (badge no topbar), padronizada no LoteSis."""
+
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notificacoes",
+    )
+    titulo = models.CharField(max_length=200)
+    mensagem = models.TextField()
+    url = models.CharField(max_length=255, blank=True, default="")
+    lida = models.BooleanField(default=False)
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Notificação"
+        verbose_name_plural = "Notificações"
+        ordering = ["-id"]
+
+    def __str__(self):
+        return f"{self.titulo} — {self.usuario}"
