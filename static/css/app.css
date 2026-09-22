@@ -223,7 +223,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { opacity: .65; cursor: po
 .contas-summary-card { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; min-height: 74px; justify-content: center; }
 .contas-summary-label { font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #64748b; }
 .contas-summary-highlight { border-color: #10b981; background: rgba(16,185,129,.08); }
-.contas-summary-selected { border-color: #3454d1; background: rgba(52,84,209,.06); }
+.contas-summary-selected { border-color: #3454d1; background: rgba(23,128,75,.06); }
 .contas-summary-selected small { font-size: .82rem; }
 .contas-money { color: #059669; font-variant-numeric: tabular-nums; }
 .contas-table-card { padding: 0; overflow: hidden; } .contas-table-caption { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px 10px; border-bottom: 1px solid #e5e7eb; background: #fafafa; }

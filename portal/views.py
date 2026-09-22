@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
 from licencas.models import Cliente, ClienteSistema, Sistema
+from portal.selectors import dashboard_metrics
 
 
 REMEMBER_ME_DURACAO = 60 * 60 * 24 * 14  # 14 dias
@@ -34,12 +35,7 @@ class LogoutPOSTView(auth_views.LogoutView):
 
 @login_required
 def home(request):
-    context = {
-        "clientes_total": Cliente.objects.count(),
-        "sistemas_total": Sistema.objects.count(),
-        "assinaturas_total": ClienteSistema.objects.count(),
-    }
-    return render(request, "portal/home.html", context)
+    return render(request, "portal/home.html", dashboard_metrics(request))
 
 
 class PasswordResetView(auth_views.PasswordResetView):

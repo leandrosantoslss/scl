@@ -4,6 +4,11 @@
 {% block page_title %}Integrações legadas{% endblock %}
 
 {% block content %}
+{% if erro_carregamento %}
+    <div class="alert alert-warning data-note" role="alert">
+        Não foi possível carregar a lista. Detalhe técnico: <code>{{ erro_carregamento }}</code>
+    </div>
+{% endif %}
 <a class="btn btn-primary btn-sm mb-2" href="#" onclick="document.getElementById('form-novo').submit();return false;">Nova integração</a>
 <form id="form-novo" method="post" action="{% url 'integracoes:create' %}" class="d-none">
     {% csrf_token %}

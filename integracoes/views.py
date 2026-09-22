@@ -13,10 +13,20 @@ from portal.audit import registrar_evento_auditoria
 from portal.permissions import group_required
 
 
+import logging
+
 @login_required
 @group_required("Administrador")
-def list(request):
-    integracoes = IntegracaoLegado.objects.select_related("application").order_by("nome")
+def integracao_list(request):
+    try:
+        integracoes = list(IntegracaoLegado.objects.select_related("application").order_by("nome"))
+    except Exception as erro:
+        logging.getLogger("scl.integracoes").critical("erro carregando integrações", exc_info=erro)
+        return render(
+            request,
+            "integracoes/list.html",
+            {"integracoes": [], "erro_carregamento": str(erro)},
+        )
     return render(request, "integracoes/list.html", {"integracoes": integracoes})
 
 
