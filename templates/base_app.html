@@ -1,21 +1,35 @@
 {% extends "base.html" %}
-{% load static %}
+
+{% block body_class %}app-body{% endblock %}
 
 {% block body %}
-{% include "partials/_sidebar.html" %}
-{% include "partials/_topbar.html" %}
-<main class="nxl-container">
-    <div class="nxl-content">
-        <div class="page-header">
-            <div class="page-header-left d-flex align-items-center">
-                <div class="page-header-title">
-                    <h4 class="default-fs">{% block page_title %}{% endblock %}</h4></div>
+    {% include "partials/_sidebar.html" %}
+    {% include "partials/_topbar.html" %}
+
+    <main class="nxl-container">
+        <div class="nxl-content">
+            <div class="page-header">
+                <div class="page-header-left d-flex align-items-center">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">{% block page_title %}{% endblock %}</h5>
+                    </div>
+                    <ul class="breadcrumb">
+                        {% block breadcrumb %}
+                            <li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
+                        {% endblock %}
+                    </ul>
+                </div>
+                <div class="page-header-right ms-auto">
+                    {% block page_actions %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="main-content">
+                {% if messages and not suppress_app_messages %}
+                    {% include "partials/_messages.html" %}
+                {% endif %}
+                {% block content %}{% endblock %}
             </div>
         </div>
-        <div class="main-content">
-            {% include "partials/_messages.html" %}
-            {% block content %}{% endblock %}
-        </div>
-    </div>
-</main>
+    </main>
 {% endblock %}

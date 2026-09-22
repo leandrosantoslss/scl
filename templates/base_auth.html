@@ -1,10 +1,8 @@
 {% extends "base.html" %}
+
+{% block design_system_css %}{% endblock %}
+{% block design_system_js %}{% endblock %}
+
 {% block body %}
-<div class="auth-wrapper d-flex align-items-center justify-content-center min-vh-100">
-    <div class="auth-card card shadow-sm" style="max-width: 420px; width: 100%;">
-        <div class="card-body p-4">
-            {% block auth_content %}{% endblock %}
-        </div>
-    </div>
-</div>
+    {% block auth_content %}{% endblock %}
 {% endblock %}

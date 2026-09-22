@@ -1,0 +1,133 @@
+/* Padrões compartilhados de interface do LoteSis. */
+:root {
+    --bs-primary: #17804b;
+    --bs-primary-rgb: 23, 128, 75;
+}
+
+.bg-primary { background-color: #17804b !important; }
+.text-primary { color: #17804b !important; }
+.border-primary { border-color: #17804b !important; }
+.btn-primary { border-color: #17804b !important; background-color: #17804b !important; }
+.btn-primary:hover, .btn-primary:focus { border-color: #12663b !important; background-color: #12663b !important; }
+.btn-outline-primary { border-color: #17804b !important; color: #17804b !important; }
+.btn-outline-primary:hover, .btn-outline-primary:focus { border-color: #17804b !important; background-color: #17804b !important; color: #fff !important; }
+input[type="checkbox"], input[type="radio"] { accent-color: #17804b; }
+.form-check-input:checked { border-color: #17804b !important; background-color: #17804b !important; }
+
+.standard-filter-panel {
+    margin: 0 0 12px;
+    padding: 14px;
+    border: 1px solid #dbe2ea;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .04);
+}
+
+.standard-filter-grid {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.standard-filter-grid .filter-field {
+    min-width: 160px;
+}
+
+.standard-filter-grid .filter-field.filter-field-wide {
+    min-width: 260px;
+    flex: 1 1 260px;
+}
+
+.standard-filter-grid .filter-label {
+    display: inline-block;
+    margin-bottom: 6px;
+    color: #64748b;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.standard-filter-grid .filter-input,
+.standard-filter-grid .filter-select {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid #94a3b8;
+    border-radius: 8px;
+    background: #fff;
+    color: #0f172a;
+    font: inherit;
+}
+
+.standard-filter-grid .filter-input:focus,
+.standard-filter-grid .filter-select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, .18);
+}
+
+.standard-filter-grid .filter-submit {
+    min-height: 40px;
+    white-space: nowrap;
+}
+
+/* Equivalente ao pagination-common-style do Design System Duralux. */
+.pagination.pagination-sm {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 0;
+}
+
+.pagination.pagination-sm .page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #e8eaf2;
+    border-radius: 100%;
+    background: #fff;
+    color: #283c50;
+    font-size: 12px;
+    line-height: 1;
+    transition: all .3s ease;
+}
+
+.pagination.pagination-sm .page-item.active .page-link,
+.pagination.pagination-sm .page-item .page-link:hover {
+    border-color: #17804b;
+    background-color: #17804b;
+    color: #fff;
+}
+
+.pagination.pagination-sm .page-item.disabled .page-link {
+    background: #f8fafc;
+    color: #94a3b8;
+    opacity: .7;
+}
+
+@media (max-width: 768px) {
+    .standard-filter-grid .filter-field,
+    .standard-filter-grid .filter-field.filter-field-wide,
+    .standard-filter-grid .filter-submit { width: 100%; min-width: 100%; flex-basis: 100%; }
+}
+
+html.app-skin-dark .standard-filter-panel,
+html.app-skin-dark .contas-page .contas-page-size,
+html.app-skin-dark .contas-page .contas-summary-card {
+    border-color: #1b2436;
+    background: #121a2d;
+    color: #e5e7eb;
+}
+
+html.app-skin-dark .standard-filter-grid .filter-input,
+html.app-skin-dark .standard-filter-grid .filter-select {
+    border-color: #334155;
+    background: #1b2436;
+    color: #e5e7eb;
+}

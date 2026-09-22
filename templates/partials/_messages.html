@@ -1,9 +1,5 @@
-{% if messages %}
-    <div class="ms-3 me-3">
+{% if messages and not suppress_app_messages %}
     {% for message in messages %}
-        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' or message.tags == 'danger' %}alert-danger{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %}" role="status">
-            {{ message }}
-        </div>
+        <div class="alert alert-{{ message.tags }}" role="alert" data-app-message data-ui-message-title="{% if message.tags == 'success' %}Sucesso{% elif message.tags == 'error' %}Erro{% else %}Aviso{% endif %}">{{ message }}</div>
     {% endfor %}
-    </div>
 {% endif %}

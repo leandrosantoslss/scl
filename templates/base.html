@@ -1,22 +1,36 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}SCL{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'vendor/duralux/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/duralux/css/vendors.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/duralux/css/theme.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
-    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+    <meta name="theme-color" content="#17804b">
+    <title>{% block title %}SCL - Sistema de Controle de Licenças{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+    {% block design_system_css %}
+        <link rel="stylesheet" href="{% static 'vendor/duralux/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'vendor/duralux/css/vendors.min.css' %}">
+        <link rel="stylesheet" href="{% static 'vendor/duralux/css/theme.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app.css' %}?v=15">
+        <link rel="stylesheet" href="{% static 'css/ui-patterns.css' %}">
+    {% endblock %}
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
     {% block body %}{% endblock %}
-    <script src="{% static 'vendor/duralux/js/vendors.min.js' %}"></script>
-    <script src="{% static 'vendor/duralux/js/common-init.min.js' %}"></script>
-    <script src="{% static 'js/portal.js' %}"></script>
+    {% block design_system_js %}
+        <script src="{% static 'vendor/duralux/js/vendors.min.js' %}"></script>
+        <script src="{% static 'vendor/duralux/js/common-init.min.js' %}"></script>
+        <script src="{% static 'js/app.js' %}"></script>
+        <script src="{% static 'js/app-messages.js' %}?v=1"></script>
+        <script src="{% static 'js/date-inputs.js' %}"></script>
+        <script src="{% static 'js/confirm-dialog.js' %}?v=2"></script>
+    {% endblock %}
+    {% if request.user.is_authenticated %}
+        <script>window.LOTISIS_SESSION_TIMEOUT = {{ request.session.get_expiry_age }};</script>
+        <script src="{% static 'js/session-timeout.js' %}?v=1"></script>
+    {% endif %}
     {% block extra_js %}{% endblock %}
 </body>
 </html>

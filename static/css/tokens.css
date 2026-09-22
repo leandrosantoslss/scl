@@ -1,14 +1,19 @@
 :root {
-    --scl-color-primary: #4361ee;
-    --scl-color-success: #2fb344;
-    --scl-color-warning: #f59e0b;
-    --scl-color-danger: #e11d48;
-    --scl-color-surface: #ffffff;
-    --scl-color-background: #f4f6fa;
-    --scl-border-radius: 0.5rem;
-    --scl-spacing-unit: 0.5rem;
-}
-
-body {
-    background-color: var(--scl-color-background);
+    --scsi-primary: #17804b;
+    --scsi-secondary: #64748b;
+    --scsi-success: #17c666;
+    --scsi-danger: #ea4d4d;
+    --scsi-warning: #ffa21d;
+    --scsi-info: #3dc7be;
+    --scsi-light: #eff0f6;
+    --scsi-dark: #283c50;
+    --scsi-darken: #001327;
+    --scsi-body-bg: #f0f2f8;
+    --scsi-body-color: #4b5563;
+    --scsi-border-color: #e5e7eb;
+    --scsi-surface: #ffffff;
+    --scsi-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --scsi-radius: 4px;
+    --scsi-radius-lg: 6px;
+    --scsi-shadow: 0 0 25px rgba(0, 0, 0, 0.06);
 }

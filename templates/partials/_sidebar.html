@@ -2,66 +2,39 @@
 <nav class="nxl-navigation" aria-label="Navegação principal">
     <div class="navbar-wrapper">
         <div class="m-header">
-            <a href="{% url 'portal:home' %}" class="b-brand">
-                <img src="{% static 'vendor/duralux/images/logo-full.png' %}" alt="SCL - Sistema de Controle de Licenças" class="logo logo-lg">
-                <img src="{% static 'vendor/duralux/images/logo-abbr.png' %}" alt="SCL" class="logo logo-sm">
+            <a href="{% url 'portal:home' %}" class="b-brand lotesis-brand">
+                <img src="{% static 'images/logo.png' %}" alt="SCL" class="logo logo-lg lotesis-logo">
+                <span class="lotesis-brand-text">
+                    <strong>SCL</strong>
+                    <small>Controle de Licenças</small>
+                </span>
             </a>
         </div>
+
         <div class="navbar-content">
             <ul class="nxl-navbar">
-                <li class="nxl-item nxl-caption">
-                    <label>Navegação</label>
-                </li>
+                <li class="nxl-item nxl-caption"><label>Operação</label></li>
                 <li class="nxl-item">
-                    <a class="nxl-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'portal:home' %}">
-                        <span class="nxl-micon"><i class="feather-home"></i></span>
+                    <a href="{% url 'portal:home' %}" class="nxl-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                        <span class="nxl-micon"><i class="feather-airplay"></i></span>
                         <span class="nxl-mtext">Dashboard</span>
                     </a>
                 </li>
-                {% if perms.licencas.view_cliente or user.is_superuser %}
-                <li class="nxl-item">
-                    <a class="nxl-link" href="{% url 'licencas:cliente-list' %}">
-                        <span class="nxl-micon"><i class="feather-users"></i></span>
-                        <span class="nxl-mtext">Clientes</span>
-                    </a>
-                </li>
-                <li class="nxl-item">
-                    <a class="nxl-link" href="{% url 'licencas:sistema-list' %}">
-                        <span class="nxl-micon"><i class="feather-box"></i></span>
-                        <span class="nxl-mtext">Sistemas</span>
-                    </a>
-                </li>
+                {% if perms.licencas.view_cliente %}
+                <li class="nxl-item"><a href="{% url 'licencas:cliente-list' %}" class="nxl-link"><span class="nxl-micon"><i class="feather-users"></i></span><span class="nxl-mtext">Clientes</span></a></li>
+                <li class="nxl-item"><a href="{% url 'licencas:sistema-list' %}" class="nxl-link"><span class="nxl-micon"><i class="feather-box"></i></span><span class="nxl-mtext">Sistemas</span></a></li>
+                <li class="nxl-item"><a href="{% url 'licencas:assinatura-list' %}" class="nxl-link"><span class="nxl-micon"><i class="feather-file-text"></i></span><span class="nxl-mtext">Assinaturas</span></a></li>
+
+                <li class="nxl-item nxl-caption"><label>Financeiro</label></li>
+                <li class="nxl-item"><a href="{% url 'financeiro:cobranca-list' %}" class="nxl-link"><span class="nxl-micon"><i class="feather-credit-card"></i></span><span class="nxl-mtext">Cobranças</span></a></li>
                 {% endif %}
-                {% if user.is_superuser or perms.licencas.view_clientesistema %}
-                <li class="nxl-item">
-                    <a class="nxl-link" href="{% url 'licencas:assinatura-list' %}">
-                        <span class="nxl-micon"><i class="feather-file-text"></i></span>
-                        <span class="nxl-mtext">Assinaturas</span>
-                    </a>
-                </li>
-                {% endif %}
-                {% if perms.financeiro.view_cobranca or user.is_superuser %}
-                <li class="nxl-item">
-                    <a class="nxl-link" href="{% url 'financeiro:cobranca-list' %}">
-                        <span class="nxl-micon"><i class="feather-credit-card"></i></span>
-                        <span class="nxl-mtext">Cobranças</span>
-                    </a>
-                </li>
-                {% endif %}
+
                 {% if user.is_superuser %}
-                <li class="nxl-item">
-                    <a class="nxl-link" href="{% url 'integracoes:list' %}">
-                        <span class="nxl-micon"><i class="feather-link"></i></span>
-                        <span class="nxl-mtext">Integrações</span>
-                    </a>
-                </li>
+                <li class="nxl-item nxl-caption"><label>Administração</label></li>
+                <li class="nxl-item"><a href="{% url 'integracoes:list' %}" class="nxl-link"><span class="nxl-micon"><i class="feather-link"></i></span><span class="nxl-mtext">Integrações</span></a></li>
                 {% endif %}
-                <li class="nxl-item">
-                    <a class="nxl-link {% if 'audit' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'portal:audit_list' %}">
-                        <span class="nxl-micon"><i class="feather-shield"></i></span>
-                        <span class="nxl-mtext">Auditoria</span>
-                    </a>
-                </li>
+
+                <li class="nxl-item"><a href="{% url 'portal:audit_list' %}" class="nxl-link {% if 'audit' in request.resolver_match.url_name %}active{% endif %}"><span class="nxl-micon"><i class="feather-shield"></i></span><span class="nxl-mtext">Auditoria</span></a></li>
             </ul>
         </div>
     </div>

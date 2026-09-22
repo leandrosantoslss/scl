@@ -1,32 +1,35 @@
-{% load static %}
 <header class="nxl-header">
     <div class="header-wrapper">
         <div class="header-left d-flex align-items-center gap-4">
-            <a href="javascript:void(0);" class="nxl-head-mobile-toggler" id="mobile-collapse">
-                <div class="hamburger hamburger--arrowturn">
-                    <div class="hamburger-box">
-                        <div class="hamburger-inner"></div>
-                    </div>
-                </div>
+            <a href="#" class="nxl-head-mobile-toggler" id="mobile-collapse" aria-label="Abrir menu">
+                <div class="hamburger hamburger--arrowturn"><div class="hamburger-box"><div class="hamburger-inner"></div></div></div>
             </a>
+            <div class="nxl-navigation-toggle">
+                <a href="#" id="menu-mini-button" aria-label="Recolher menu"><i class="feather-align-left"></i></a>
+            </div>
         </div>
-        <div class="header-right ms-auto d-flex align-items-center gap-3">
-            <div class="dropdown">
-                <a href="javascript:void(0);" class="avatar-text avatar-md bg-primary text-white" data-bs-toggle="dropdown">
-                    {{ user.get_username|truncatechars:10 }}
-                </a>
-                <div class="dropdown-menu nxl-h-dropdown">
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        {% if user.is_superuser %}Administrador{% else %}{{ user.get_username }}{% endif %}
+
+        <div class="header-right ms-auto">
+            <div class="d-flex align-items-center gap-3">
+                <span class="topbar-company d-none d-md-inline-block" title="Sistema de Controle de Licenças">SCL</span>
+                <div class="nxl-h-item topbar-dropdown" id="profile-dropdown-wrapper">
+                    <a href="#" class="nxl-head-link me-0 d-flex align-items-center gap-2" id="profile-dropdown-toggle" role="button" aria-expanded="false">
+                        <span class="lotesis-user-initials">{{ user.get_username|slice:":2"|upper }}</span>
+                        <span class="d-none d-sm-inline text-start">
+                            <strong class="d-block">{{ user.get_username|upper }}</strong>
+                            <small class="text-muted">Usuário</small>
+                        </span>
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <form method="post" action="{% url 'logout' %}" class="dropdown-item">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link p-0 text-decoration-none">
-                            <i class="feather-log-out"></i>
-                            <span>Logout</span>
-                        </button>
-                    </form>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li class="px-3 py-2"><strong>{{ user.get_username }}</strong><small class="d-block text-muted">Autenticado</small></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" class="m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item d-flex align-items-center gap-2 py-2 text-danger"><i class="feather-log-out"></i> Sair</button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
