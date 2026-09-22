@@ -1,37 +1,79 @@
 {% extends "base_app.html" %}
+{% load static %}
 
-{% block title %}SCL - Sistema{% endblock %}
-{% block page_title %}{% if form %}{% if sistema %}Editar sistema{% else %}Novo sistema{% endif %}{% else %}{{ sistema.nome }}{% endif %}{% endblock %}
+{% block title %}{% if sistema %}Editar sistema{% else %}Novo sistema{% endif %} - SCL{% endblock %}
+{% block page_title %}{% if sistema %}Editar sistema{% else %}Novo sistema{% endif %}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'licencas:sistema-list' %}">Sistemas</a></li>
+    <li class="breadcrumb-item active">{% if sistema %}Editar{% else %}Novo{% endif %}</li>
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{% url 'licencas:sistema-list' %}" class="btn btn-light btn-sm">
+        <i class="feather-arrow-left me-1"></i> Voltar
+    </a>
+{% endblock %}
 
 {% block content %}
-{% if form %}
-    <form method="post" class="row g-3">
+<div class="lotesis-form-page">
+    <div class="d-flex align-items-center justify-content-between p-3 bg-white shadow-sm rounded mb-3">
+        <div>
+            <h2 class="h5 mb-1 fw-semibold">{% if sistema %}Editar Sistema — {{ sistema.nome }}{% else %}Novo Sistema{% endif %}</h2>
+            <div class="text-muted small">Dados do sistema licenciado</div>
+        </div>
+    </div>
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" novalidate>
         {% csrf_token %}
-        {% for field in form %}
-            <div class="col-md-6">
-                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold"><i class="feather-box me-1"></i> Identificação</h6>
             </div>
-        {% endfor %}
-        {% for error in form.non_field_errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
-        <div class="col-12">
-            <a class="btn btn-secondary btn-sm" href="{% url 'licencas:sistema-list' %}">Cancelar</a>
-            <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+            <div class="card-body pt-0">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.nome.id_for_label }}">{{ form.nome.label }}</label>
+                        {{ form.nome }}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="{{ form.codigo.id_for_label }}">{{ form.codigo.label }}</label>
+                        {{ form.codigo }}
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-check form-switch mt-4">
+                            {{ form.ativo }}
+                            <label class="form-check-label" for="{{ form.ativo.id_for_label }}">{{ form.ativo.label }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-12">
+                        <label class="form-label" for="{{ form.descricao.id_for_label }}">Descrição</label>
+                        {{ form.descricao }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex flex-wrap gap-2 py-3">
+                <a href="{% url 'licencas:sistema-list' %}" class="btn btn-light">
+                    <i class="feather-arrow-left me-1"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="feather-check me-1"></i> Salvar
+                </button>
+            </div>
         </div>
     </form>
-{% else %}
-    <dl class="row">
-        <dt class="col-sm-3">Nome</dt><dd class="col-sm-9">{{ sistema.nome }}</dd>
-        <dt class="col-sm-3">Código</dt><dd class="col-sm-9">{{ sistema.codigo }}</dd>
-        <dt class="col-sm-3">Descrição</dt><dd class="col-sm-9">{{ sistema.descricao }}</dd>
-        <dt class="col-sm-3">Situação</dt><dd class="col-sm-9">{% if sistema.ativo %}Ativo{% else %}Inativo{% endif %}</dd>
-    </dl>
-    <div class="d-flex gap-2">
-        <a class="btn btn-secondary btn-sm" href="{% url 'licencas:sistema-list' %}">Voltar</a>
-        {% if perms.licencas.change_sistema %}
-            <a class="btn btn-primary btn-sm" href="{% url 'licencas:sistema-update' sistema.pk %}">Editar</a>
-        {% endif %}
-    </div>
-{% endif %}
+</div>
 {% endblock %}

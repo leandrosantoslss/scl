@@ -1,22 +1,157 @@
 {% extends "base_app.html" %}
+{% load static %}
 
-{% block title %}SCL - Assinatura{% endblock %}
+{% block title %}{% if assinatura %}Editar assinatura{% else %}Nova assinatura{% endif %} - SCL{% endblock %}
 {% block page_title %}{% if assinatura %}Editar assinatura{% else %}Nova assinatura{% endif %}{% endblock %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'licencas:assinatura-list' %}">Assinaturas</a></li>
+    <li class="breadcrumb-item active">{% if assinatura %}Editar{% else %}Nova{% endif %}</li>
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{% url 'licencas:assinatura-list' %}" class="btn btn-light btn-sm">
+        <i class="feather-arrow-left me-1"></i> Voltar
+    </a>
+{% endblock %}
+
 {% block content %}
-<form method="post" class="row g-3">
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="col-md-6">
-            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+<div class="lotesis-form-page">
+
+    <div class="d-flex align-items-center justify-content-between p-3 bg-white shadow-sm rounded mb-3">
+        <div>
+            <h2 class="h5 mb-1 fw-semibold">
+                {% if assinatura %}
+                    Editar Assinatura — {{ assinatura.cliente }} • {{ assinatura.sistema }}
+                {% else %}
+                    Nova Assinatura
+                {% endif %}
+            </h2>
+            <div class="text-muted small">Contrato entre cliente e sistema</div>
         </div>
-    {% endfor %}
-    {% for error in form.non_field_errors %}<div class="text-danger w-100">{{ error }}</div>{% endfor %}
-    <div class="col-12">
-        <a class="btn btn-secondary btn-sm" href="{% url 'licencas:assinatura-list' %}">Cancelar</a>
-        <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
     </div>
-</form>
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold"><i class="feather-share-2 me-1"></i> Vínculo</h6>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.cliente.id_for_label }}">Cliente</label>
+                        {{ form.cliente }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.sistema.id_for_label }}">Sistema</label>
+                        {{ form.sistema }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold"><i class="feather-dollar-sign me-1"></i> Comercial</h6>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label" for="{{ form.valor_recorrente.id_for_label }}">Valor recorrente</label>
+                        <div class="input-group">
+                            <span class="input-group-text">R$</span>
+                            {{ form.valor_recorrente }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="{{ form.periodicidade.id_for_label }}">Periodicidade</label>
+                        {{ form.periodicidade }}
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check form-switch mt-4">
+                            {{ form.ativo }}
+                            <label class="form-check-label" for="{{ form.ativo.id_for_label }}">Ativa</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold"><i class="feather-calendar me-1"></i> Vigência e vencimento</h6>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label" for="{{ form.data_inicio.id_for_label }}">Data de início</label>
+                        {{ form.data_inicio }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="{{ form.primeiro_vencimento.id_for_label }}">Primeiro vencimento</label>
+                        {{ form.primeiro_vencimento }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="{{ form.data_fim.id_for_label }}">Data de fim (opcional)</label>
+                        {{ form.data_fim }}
+                    </div>
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.dia_vencimento.id_for_label }}">Dia de vencimento (1-28, opcional)</label>
+                        {{ form.dia_vencimento }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.dias_carencia.id_for_label }}">Dias de carência (opcional)</label>
+                        {{ form.dias_carencia }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if form.bloqueado %}
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold">
+                    <i class="feather-lock me-1"></i>Bloqueio
+                </h6>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <div class="form-check form-switch">
+                            {{ form.bloqueado }}
+                            <label class="form-check-label" for="{{ form.bloqueado.id_for_label }}">Bloqueada</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label" for="{{ form.motivo_bloqueio.id_for_label }}">Motivo do bloqueio</label>
+                        {{ form.motivo_bloqueio }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex flex-wrap gap-2 py-3">
+                <a href="{% url 'licencas:assinatura-list' %}" class="btn btn-light">
+                    <i class="feather-arrow-left me-1"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="feather-check me-1"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

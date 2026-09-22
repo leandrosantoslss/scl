@@ -1,0 +1,229 @@
+.lotesis-form-page { width: 100%; background: #f3f4f6; }
+.lotesis-form-page .vendas-header-card { background: linear-gradient(90deg, #1b2436 0%, #166534 60%, #3454d1 100%) !important; color: #fff; border-radius: 12px; padding: 26px 32px; min-height: 120px; box-shadow: 0 10px 24px -12px rgba(0,0,0,.35), 0 4px 10px -4px rgba(0,0,0,.2); }
+.lotesis-form-page .vendas-title { color: #fff !important; }
+.lotesis-form-page .contract-header-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.lotesis-form-page .contract-header-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; color: rgba(255,255,255,.8); font-size: .72rem; }
+.lotesis-form-page .contract-statuses { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+.lotesis-form-page .contract-header-meta strong { color: #fff; }
+.lotesis-form-page .contract-status-badge { padding: 4px 10px; border: 1px solid #86efac; border-radius: 999px; background: rgba(34,197,94,.2); color: #dcfce7; font-size: .68rem; font-weight: 700; }
+.lotesis-form-page .contract-signature-status-badge { padding: 4px 10px; border: 1px solid #fcd34d; border-radius: 999px; background: rgba(245,158,11,.2); color: #fef3c7; font-size: .68rem; font-weight: 700; }
+.lotesis-form-page .contract-signature-status-badge.status-assinado { border-color: #86efac; background: rgba(34,197,94,.2); color: #dcfce7; }
+.lotesis-form-page .contract-status-badge.status-cancelado, .lotesis-form-page .contract-status-badge.status-distratado { border-color: #fca5a5; background: rgba(239,68,68,.2); color: #fee2e2; }
+.lotesis-form-page .contract-status-badge.status-reaberto { border-color: #93c5fd; background: rgba(59,130,246,.2); color: #dbeafe; }
+.lotesis-form-page .contract-status-badge.status-faturado { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.18); color: #fff; }
+.lotesis-form-page .contract-action-buttons { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.lotesis-form-page .contract-action-button { display: inline-flex; align-items: center; padding: 7px 10px; border: 1px solid rgba(255,255,255,.35); border-radius: 6px; background: #1b2436; color: #fff; font-size: .68rem; cursor: pointer; }
+.lotesis-form-page .contract-action-button:hover:not(:disabled) { background: #0f4526; }
+.lotesis-form-page .contract-action-button:disabled { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.12); color: rgba(255,255,255,.55); cursor: not-allowed; }
+.lotesis-form-page .vendas-content-card { display: flex; flex-direction: column; margin: -28px auto 12px; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+.lotesis-form-page .vendas-card-body { display: flex; flex-direction: column; padding: 32px; overflow: auto; }
+.lotesis-form-page #contract-edit-fields { min-width: 0; margin: 0; padding: 0; border: 0; }
+.lotesis-form-page #contract-edit-fields:disabled { opacity: .78; }
+.lotesis-form-page .cadastro-tabs-bar { display: flex; align-items: flex-end; gap: 4px; padding: 16px 24px 0; background: #f3f4f6; border-bottom: 1px solid #e5e7eb; border-radius: 16px 16px 0 0; }
+.lotesis-form-page .cadastro-tab { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: 1px solid transparent; border-bottom: 0; border-radius: 8px 8px 0 0; background: transparent !important; color: #6b7280 !important; font: 600 .9rem system-ui, sans-serif; cursor: pointer; margin-bottom: -1px; }
+.lotesis-form-page .cadastro-tab:hover { background: #e5e7eb !important; color: #1b2436 !important; }
+.lotesis-form-page .cadastro-tab.active { position: relative; top: 1px; background: #fff !important; color: #1b2436 !important; border-top: 2px solid #3454d1; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.lotesis-form-page .tab-pane[hidden] { display: none !important; }
+.lotesis-form-page .tab-pane:not([hidden]) { display: block !important; width: 100%; }
+.lotesis-form-page .vendas-section-title { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 2px solid #f3f4f6; margin-bottom: 32px; }
+.lotesis-form-page .vendas-section-title h3 { margin: 0; color: #1b2436; font-size: 1rem; font-weight: 700; }
+.lotesis-form-page .vendas-input, .lotesis-form-page .vendas-select { width: 100%; min-height: 38px; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; color: #111827; font-size: .85rem; }
+.lotesis-form-page input:not([type="checkbox"]):not([type="radio"]), .lotesis-form-page select { height: 40px; min-height: 40px; box-sizing: border-box; }
+.lotesis-form-page select { padding-top: 0; padding-bottom: 0; line-height: 1.25; }
+.lotesis-form-page .vendas-label { display: inline-block; margin-bottom: 4px; color: #6b7280; font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.lotesis-form-page .distrato-summary-grid { row-gap: 18px; }
+.lotesis-form-page .distrato-summary-field { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; min-height: 58px; }
+.lotesis-form-page .distrato-summary-label { display: block; color: #6b7280; font-size: .7rem; font-weight: 700; letter-spacing: .05em; line-height: 1.2; text-transform: uppercase; }
+.lotesis-form-page .distrato-summary-value { display: block; max-width: 100%; color: #111827; font-size: .9rem; line-height: 1.35; overflow-wrap: anywhere; }
+.lotesis-form-page .distrato-summary-meta { display: block; max-width: 100%; color: #6b7280; font-size: .78rem; line-height: 1.3; overflow-wrap: anywhere; }
+.lotesis-form-page .btn.primary { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 10px 16px; border: 1px solid #166534; border-radius: 8px; background: #166534 !important; color: #fff !important; cursor: pointer; }
+.lotesis-form-page .btn.primary:hover { border-color: #1b2436; background: #1b2436 !important; color: #fff !important; filter: brightness(1.05); }
+.lotesis-form-page .button-spinner { display: inline-block; width: 14px; height: 14px; margin-right: 7px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: lotesis-spin .7s linear infinite; vertical-align: -2px; }
+@keyframes lotesis-spin { to { transform: rotate(360deg); } }
+.lotesis-form-page .contract-stepper { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 18px; }
+.lotesis-form-page .contract-stepper > i { width: 150px; height: 2px; background: rgba(255,255,255,.3); }
+.lotesis-form-page .contract-step { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; border: 0; background: transparent !important; color: rgba(255,255,255,.6) !important; cursor: pointer; font-size: .8rem; text-transform: uppercase; }
+.lotesis-form-page .contract-step span { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 2px solid rgba(255,255,255,.3); border-radius: 50%; background: #1b2436; font-weight: 700; }
+.lotesis-form-page .contract-step.active, .lotesis-form-page .contract-step:hover { color: #fff !important; }
+.lotesis-form-page .contract-step.active span { border-color: #3454d1; background: #3454d1; box-shadow: 0 0 0 4px rgba(255,255,255,.15); }
+.lotesis-form-page button#contract-next, .lotesis-form-page button#contract-submit { display: inline-flex; align-items: center; justify-content: center; min-width: 150px; min-height: 40px; border: 1px solid #166534; border-radius: 8px; background: #166534; color: #fff !important; opacity: 1 !important; visibility: visible; }
+.lotesis-form-page button#contract-next:hover, .lotesis-form-page button#contract-submit:hover { background: #1b2436; border-color: #1b2436; color: #fff !important; filter: brightness(1.05); }
+.lotesis-form-page button#contract-next[hidden], .lotesis-form-page button#contract-submit[hidden] { display: none !important; }
+.lotesis-form-page .contract-tab-panel[hidden] { display: none !important; }
+.lotesis-form-page .contract-tab-panel:not([hidden]) { display: block; width: 100%; }
+.lotesis-form-page .clientes-address-table { min-width: 1100px; }
+.lotesis-form-page .contatos-table { min-width: 760px; }
+.lotesis-form-page .contatos-table th:first-child, .lotesis-form-page .contatos-table td:first-child { padding-left: 16px; }
+.lotesis-form-page .contatos-table th:last-child, .lotesis-form-page .contatos-table td:last-child { padding-right: 16px; }
+.lotesis-form-page .contact-actions { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.lotesis-form-page .documentos-table { min-width: 620px; }
+.lotesis-form-page .contatos-historico-table { min-width: 900px; }
+.lotesis-form-page .lot-summary { margin-top: 24px; padding: 18px 20px; border: 1px solid #fcd34d; border-radius: 12px; background: #fffbeb; }
+.lotesis-form-page .lot-summary-title { margin-bottom: 12px; color: #92400e; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.lotesis-form-page .lot-summary-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+.lotesis-form-page .lot-summary-grid span { display: block; color: #92400e; font-size: .7rem; font-weight: 700; text-transform: uppercase; }
+.lotesis-form-page .lot-summary-grid strong { display: block; margin-top: 4px; color: #78350f; font-size: .9rem; }
+.lotesis-form-page .client-summary { margin: 24px 0; padding: 18px 20px; border: 1px solid #dbe2ea; border-radius: 12px; background: #f8fafc; }
+.lotesis-form-page .client-summary-title { margin-bottom: 12px; color: #1b2436; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.lotesis-form-page .client-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.lotesis-form-page .client-summary-grid span { display: block; color: #64748b; font-size: .7rem; font-weight: 700; text-transform: uppercase; }
+.lotesis-form-page .client-summary-grid strong { display: block; margin-top: 4px; color: #283c50; font-size: .88rem; }
+.preview-overlay { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(15, 23, 42, .5); }
+.preview-frame { width: min(900px, 100%); max-height: 82vh; overflow: hidden; border-radius: 10px; background: #fff; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+.preview-header, .preview-footer { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid #e5e7eb; }
+.preview-footer { justify-content: flex-end; border-top: 1px solid #e5e7eb; border-bottom: 0; }
+.preview-body { max-height: 62vh; overflow: auto; padding: 16px 18px; }
+.preview-close { border: 0; background: transparent; color: #64748b; font-size: 1.7rem; line-height: 1; cursor: pointer; }
+.preview-close:hover { color: #3454d1; }
+.preview-frame .btn.primary { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 10px 16px; border: 1px solid #166534; border-radius: 8px; background: #166534 !important; color: #fff !important; cursor: pointer; }
+.preview-frame .btn.primary:hover { border-color: #1b2436; background: #1b2436 !important; color: #fff !important; }
+.boleto-frame { width: min(1000px, 100%); }
+.boleto-filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 16px 18px 8px; }
+.boleto-filters label { color: #64748b; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+.boleto-filters input { display: block; width: 100%; margin-top: 5px; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: .85rem; font-weight: 400; }
+.boleto-filter-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 0 18px 8px; }
+.boleto-items { max-height: 48vh; }
+.contract-print-model { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid #e5e7eb; }
+.contract-print-model:last-child { border-bottom: 0; }
+.contract-print-model small { display: block; color: #64748b; }
+.contract-print-result { margin-top: 16px; padding: 14px; border: 1px solid #bbf7d0; border-radius: 8px; background: #f0fdf4; }
+html.app-skin-dark body.app-body .contract-print-model { border-color: #334155; }
+html.app-skin-dark body.app-body .contract-print-model small { color: #94a3b8; }
+html.app-skin-dark body.app-body .contract-print-result { border-color: #28613e; background: #172b21; }
+.billing-confirm-frame { width: min(440px, 100%); }
+.billing-confirm-body { padding: 22px 18px; color: #475569; font-size: .9rem; }
+.billing-loading-frame { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 30px 18px; color: #1b2436; text-align: center; }
+.billing-loading-frame span { color: #64748b; font-size: .85rem; }
+.billing-loading-spinner { width: 38px; height: 38px; border: 4px solid #bbf7d0; border-top-color: #3454d1; border-radius: 50%; animation: lotesis-spin .7s linear infinite; }
+.billing-confirm-actions { justify-content: center; gap: 12px; }
+.billing-confirm-actions .billing-confirm-no, .billing-confirm-actions .billing-confirm-yes { min-width: 100px; border-radius: 7px; font-weight: 700; }
+.billing-confirm-actions .billing-confirm-no { border: 1px solid #b91c1c; background: #dc2626; color: #fff; }
+.billing-confirm-actions .billing-confirm-no:hover { border-color: #991b1b; background: #b91c1b; color: #fff; }
+.billing-confirm-actions .billing-confirm-yes { border: 1px solid #166534; background: #16a34a; color: #fff; }
+.billing-confirm-actions .billing-confirm-yes:hover { border-color: #1b2436; background: #15803d; color: #fff; }
+html.app-skin-dark body.app-body .billing-confirm-body { color: #cbd5e1; }
+html.app-skin-dark body.app-body .billing-loading-frame { color: #86efac; }
+html.app-skin-dark body.app-body .billing-loading-frame span { color: #94a3b8; }
+@media (max-width: 700px) { .boleto-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.lotesis-form-page .client-summary-address { grid-column: span 4; }
+.lotesis-form-page .launch-list-card { margin-top: 24px; overflow: hidden; border: 1px solid #e5e7eb; border-radius: 10px; }
+.lotesis-form-page .launch-list-scroll { max-height: 330px; overflow-y: auto; }
+.lotesis-form-page .launch-list-scroll table { min-width: 1180px; }
+.lotesis-form-page .launch-list-scroll thead th { position: sticky; top: 0; z-index: 1; background: #fff; box-shadow: 0 1px 0 #e5e7eb; }
+.lotesis-form-page .launch-type-badge { display: inline-flex; align-items: center; padding: 4px 9px; border-radius: 999px; font-size: .7rem; font-weight: 700; line-height: 1; }
+.lotesis-form-page .launch-type-signal { background: #fef3c7; color: #92400e; }
+.lotesis-form-page .launch-type-installment { background: #dbeafe; color: #1d4ed8; }
+.lotesis-form-page .launch-list-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #1b2436; color: #fff; }
+.lotesis-form-page .launch-list-header span { padding: 3px 8px; border-radius: 5px; background: rgba(255,255,255,.15); font-size: .78rem; }
+.lotesis-form-page .launch-action-field { grid-column: span 12 !important; display: flex; align-items: flex-end; justify-content: flex-end; flex-wrap: nowrap; gap: 8px; min-width: 0; }
+.lotesis-form-page .clear-finance { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 10px 12px; border: 1px solid #fecaca; border-radius: 8px; background: #fff1f2; color: #b91c1c; font-size: .75rem; white-space: nowrap; cursor: pointer; }
+.lotesis-form-page .clear-finance:hover { background: #fee2e2; border-color: #fca5a5; }
+.lotesis-form-page .negotiation-summary { margin-top: 24px; padding: 20px; border: 1px solid #bbf7d0; border-radius: 10px; background: #f0fdf4; }
+.lotesis-form-page .negotiation-summary-title { margin-bottom: 14px; color: #166534; font-weight: 700; }
+.lotesis-form-page .negotiation-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.lotesis-form-page .negotiation-summary-grid span { display: block; color: #64748b; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+.lotesis-form-page .negotiation-summary-grid strong { display: block; margin-top: 5px; color: #15803d; font-size: 1.05rem; }
+@media (max-width: 700px) { .lotesis-form-page .negotiation-summary-grid { grid-template-columns: 1fr; gap: 12px; } }
+.lotesis-form-page .searchable-choice { background: #fff; }
+.lotesis-form-page .searchable-combobox { position: relative; }
+.lotesis-form-page .searchable-combobox-menu { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 30; max-height: 260px; overflow-y: auto; padding: 4px 0; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; box-shadow: 0 10px 24px rgba(15,23,42,.16); }
+.lotesis-form-page .searchable-combobox-option { display: block; width: 100%; padding: 9px 12px; border: 0; background: #fff; color: #283c50; font: inherit; font-size: .85rem; text-align: left; cursor: pointer; }
+.lotesis-form-page .searchable-combobox-option:hover { background: #f0fdf4; color: #3454d1; }
+.related-modal-frame { width: min(900px, 100%); }
+.related-modal-small { width: min(620px, 100%); }
+.related-modal-form { padding: 20px; }
+.related-modal-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+.related-field { display: flex; min-width: 0; flex-direction: column; gap: 5px; color: #64748b; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+.related-field input:not([type="checkbox"]), .related-field select { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; color: #111827; font-size: .85rem; font-weight: 400; text-transform: none; }
+.related-field input:focus, .related-field select:focus { border-color: #3454d1; box-shadow: 0 0 0 2px rgba(23,128,75,.15); outline: 0; }
+.related-field small { color: #64748b; font-size: .68rem; font-weight: 400; text-transform: none; }
+.related-span-2 { grid-column: span 2; }
+.related-span-3 { grid-column: span 3; }
+.related-check { flex-direction: row; align-items: center; align-self: center; gap: 8px; text-transform: none; }
+.related-check input { width: 18px; height: 18px; accent-color: #3454d1; }
+.related-inline { display: flex; align-items: center; gap: 8px; }
+.related-inline input { flex: 1; }
+.related-modal-footer { margin: 18px -20px -20px; }
+.related-modal-grid { align-items: end; }
+#email-related-form .related-modal-grid { grid-template-columns: 180px minmax(300px, 1fr); }
+#email-related-form .related-modal-grid .related-field:nth-child(2) { grid-column: auto; }
+#email-related-form .related-modal-grid .related-check { grid-column: 1 / -1; }
+#phone-related-form .related-modal-grid { grid-template-columns: repeat(3, minmax(180px, 1fr)); }
+#phone-related-form .related-modal-grid .related-field span { white-space: nowrap; }
+#phone-related-form .related-modal-grid .related-check { grid-column: 1 / -1; }
+.related-screen-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px 14px; width: 100%; }
+.related-screen-field { display: flex; min-width: 0; flex-direction: column; gap: 6px; }
+.related-screen-field label { margin: 0; color: #64748b; font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.related-email-screen-grid > .related-screen-field:first-child { grid-column: span 2; }
+.related-email-screen-grid > .related-screen-field:nth-child(2) { grid-column: span 4; }
+.related-email-screen-grid > .related-screen-check { grid-column: 1 / -1; }
+.related-phone-screen-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.related-phone-screen-grid .related-screen-field label { white-space: nowrap; }
+.related-screen-field input:not([type="checkbox"]), .related-screen-field select { width: 100%; height: 42px; min-height: 42px; padding: 9px 11px; border: 1px solid #d1d5db; border-radius: 7px; background: #fff; color: #111827; font-size: .86rem; }
+.related-screen-field input:focus, .related-screen-field select:focus { border-color: #3454d1; box-shadow: 0 0 0 3px rgba(23,128,75,.14); outline: 0; }
+.related-screen-wide { grid-column: span 2; }
+.related-screen-check { display: flex; min-height: 42px; align-items: center; color: #475569; font-size: .82rem; font-weight: 600; }
+.related-screen-check span { display: inline-flex; align-items: center; gap: 8px; }
+.related-screen-check input { width: 18px; height: 18px; accent-color: #3454d1; }
+.related-screen-full { grid-column: 1 / -1; }
+.related-generic-screen-grid { margin-bottom: 0; }
+html.app-skin-dark body.app-body .related-screen-field label, html.app-skin-dark body.app-body .related-screen-check { color: #cbd5e1; }
+html.app-skin-dark body.app-body .related-screen-field input:not([type="checkbox"]), html.app-skin-dark body.app-body .related-screen-field select { border-color: #475569; background: #1b2436; color: #e5e7eb; }
+@media (max-width: 768px) { .related-screen-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .related-screen-wide, .related-email-screen-grid > .related-screen-field:first-child, .related-email-screen-grid > .related-screen-field:nth-child(2) { grid-column: span 2; } .related-phone-screen-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+html.app-skin-dark body.app-body .related-field { color: #94a3b8; }
+html.app-skin-dark body.app-body .related-field input:not([type="checkbox"]), html.app-skin-dark body.app-body .related-field select { border-color: #475569; background: #1b2436; color: #e5e7eb; }
+html.app-skin-dark body.app-body .related-field small { color: #94a3b8; }
+@media (max-width: 700px) { .related-modal-grid, #email-related-form .related-modal-grid, #phone-related-form .related-modal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .related-span-2, .related-span-3 { grid-column: span 2; } #email-related-form .related-modal-grid .related-field:nth-child(2), #email-related-form .related-modal-grid .related-check, #phone-related-form .related-modal-grid .related-check { grid-column: 1 / -1; } }
+.lotesis-form-page .searchable-combobox-empty { padding: 10px 12px; color: #64748b; font-size: .85rem; }
+@media (max-width: 900px) { .lotesis-form-page .lot-summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .lotesis-form-page .client-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lotesis-form-page .client-summary-address { grid-column: span 2; } }
+.lotesis-form-page .socios-table { min-width: 1300px; }
+.lotesis-form-page .contratos-vinculados-table { min-width: 1120px; }
+.lotesis-form-page .contratos-parcelas-table { min-width: 1350px; }
+.territorial-form-page .territorial-section { padding: 0 4px; }
+.territorial-form-page .territorial-block { padding: 16px; margin-top: 14px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; }
+.territorial-form-page .territorial-block-header { display: grid; grid-template-columns: auto minmax(120px, 240px) auto; align-items: center; gap: 10px; margin-bottom: 12px; color: #1b2436; }
+.territorial-form-page .lots-container { display: grid; gap: 8px; }
+.territorial-form-page .territorial-lot { display: grid; grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(120px, 1fr) minmax(140px, 1fr) auto; gap: 8px; align-items: center; padding: 8px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; }
+.territorial-form-page .territorial-lot::before { content: "Lote"; color: #64748b; font-size: .7rem; font-weight: 700; text-transform: uppercase; }
+.territorial-form-page .territorial-lot > input:first-child { grid-column: 2; }
+@media (max-width: 768px) { .territorial-form-page .territorial-block-header { grid-template-columns: auto 1fr auto; } .territorial-form-page .territorial-lot { grid-template-columns: 1fr 1fr; } .territorial-form-page .territorial-lot::before { display: none; } .territorial-form-page .territorial-lot > input:first-child { grid-column: auto; } .territorial-form-page .territorial-lot > button { justify-self: end; } }
+.lotesis-form-page .span-2 { grid-column: span 2; }
+.lotesis-form-page .span-1 { grid-column: span 1; }
+.lotesis-form-page .span-3 { grid-column: span 3; }
+.lotesis-form-page .span-4 { grid-column: span 4; }
+.lotesis-form-page .span-5 { grid-column: span 5; }
+.lotesis-form-page .span-6 { grid-column: span 6; }
+.lotesis-form-page .span-12 { grid-column: span 12; }
+@media (max-width: 768px) { .lotesis-form-page .vendas-header-card { padding: 20px 16px; } .lotesis-form-page .vendas-card-body { padding: 20px 16px; } .lotesis-form-page .cadastro-tabs-bar { overflow-x: auto; padding-left: 12px; padding-right: 12px; } .lotesis-form-page .cadastro-tab { padding: 10px 14px; white-space: nowrap; } .lotesis-form-page .vendas-header-top { align-items: flex-start; flex-direction: column; } .lotesis-form-page .contract-header-actions { width: 100%; align-items: flex-start; } .lotesis-form-page .contract-header-meta { align-items: flex-start; } .lotesis-form-page .contract-action-buttons { justify-content: flex-start; } .lotesis-form-page .launch-action-field { flex-wrap: wrap; justify-content: flex-start; } .lotesis-form-page .contract-stepper { justify-content: space-between; gap: 3px; } .lotesis-form-page .contract-stepper > i { width: 20px; } .lotesis-form-page .contract-step strong { font-size: .58rem; } .lotesis-form-page .span-1, .lotesis-form-page .span-2, .lotesis-form-page .span-3, .lotesis-form-page .span-4, .lotesis-form-page .span-5, .lotesis-form-page .span-6, .lotesis-form-page .span-12 { grid-column: span 12; } }
+
+html.app-skin-dark body.app-body .lotesis-form-page { background: #121a2d; color: #cbd5e1; }
+html.app-skin-dark body.app-body .lotesis-form-page .vendas-content-card,
+html.app-skin-dark body.app-body .lotesis-form-page .card,
+html.app-skin-dark body.app-body .lotesis-form-page .preview-frame { background: #121a2d !important; border-color: #1b2436 !important; color: #cbd5e1; }
+html.app-skin-dark body.app-body .lotesis-form-page .vendas-input,
+html.app-skin-dark body.app-body .lotesis-form-page .vendas-select,
+html.app-skin-dark body.app-body .lotesis-form-page .form-control,
+html.app-skin-dark body.app-body .lotesis-form-page .form-select { background: #1b2436 !important; border-color: #334155 !important; color: #e5e7eb !important; }
+html.app-skin-dark body.app-body .lotesis-form-page .vendas-label,
+html.app-skin-dark body.app-body .lotesis-form-page .text-muted { color: #94a3b8 !important; }
+html.app-skin-dark body.app-body .lotesis-form-page .vendas-section-title { border-color: #1b2436; }
+html.app-skin-dark body.app-body .lotesis-form-page .vendas-section-title h3,
+html.app-skin-dark body.app-body .lotesis-form-page .client-summary-title { color: #86efac; }
+html.app-skin-dark body.app-body .lotesis-form-page .cadastro-tabs-bar { background: #1b2436; border-color: #334155; }
+html.app-skin-dark body.app-body .lotesis-form-page .cadastro-tab { color: #94a3b8 !important; }
+html.app-skin-dark body.app-body .lotesis-form-page .cadastro-tab:hover,
+html.app-skin-dark body.app-body .lotesis-form-page .cadastro-tab.active { background: #121a2d !important; color: #86efac !important; border-color: #334155; }
+html.app-skin-dark body.app-body .lotesis-form-page .lot-summary,
+html.app-skin-dark body.app-body .lotesis-form-page .vendas-yellow-box { background: #332b16; border-color: #927326; }
+html.app-skin-dark body.app-body .lotesis-form-page .client-summary,
+html.app-skin-dark body.app-body .lotesis-form-page .negotiation-summary { background: #172333; border-color: #28506b; }
+html.app-skin-dark body.app-body .lotesis-form-page .client-summary-grid strong,
+html.app-skin-dark body.app-body .lotesis-form-page .launch-list-scroll td { color: #cbd5e1; }
+html.app-skin-dark body.app-body .lotesis-form-page .launch-list-scroll thead th { background: #1b2436; color: #cbd5e1; border-color: #334155; }
+html.app-skin-dark body.app-body .lotesis-form-page .searchable-combobox-menu { background: #1b2436; border-color: #334155; }
+html.app-skin-dark body.app-body .lotesis-form-page .searchable-combobox-option { background: #1b2436; color: #e5e7eb; }
+html.app-skin-dark body.app-body .lotesis-form-page .searchable-combobox-option:hover { background: #263a4d; color: #86efac; }
+html.app-skin-dark body.app-body .lotesis-form-page .preview-header,
+html.app-skin-dark body.app-body .lotesis-form-page .preview-footer { border-color: #334155; }
+html.app-skin-dark body.app-body .lotesis-form-page .clear-finance { background: #321d24; border-color: #7f1d1d; color: #fca5a5; }
+html.app-skin-dark body.app-body .lotesis-form-page .clear-finance:hover { background: #451f27; border-color: #b91c1c; color: #fecaca; }
