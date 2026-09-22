@@ -227,3 +227,74 @@ html.app-skin-dark body.app-body .lotesis-form-page .preview-header,
 html.app-skin-dark body.app-body .lotesis-form-page .preview-footer { border-color: #334155; }
 html.app-skin-dark body.app-body .lotesis-form-page .clear-finance { background: #321d24; border-color: #7f1d1d; color: #fca5a5; }
 html.app-skin-dark body.app-body .lotesis-form-page .clear-finance:hover { background: #451f27; border-color: #b91c1c; color: #fecaca; }
+
+
+/* ============= form-control / form-select padrão SCL ============= */
+.lotesis-form-page .form-control,
+.lotesis-form-page .form-select {
+    min-height: 42px;
+    padding: 8px 12px;
+    border: 1px solid #d5dae3;
+    border-radius: 8px;
+    background: #fff;
+    color: #1f2937;
+    font-size: .9rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.lotesis-form-page .form-textarea, .lotesis-form-page textarea.form-control { min-height: 90px; }
+.lotesis-form-page .form-control:hover,
+.lotesis-form-page .form-select:hover { border-color: #b8c2d0; }
+.lotesis-form-page .form-control:focus,
+.lotesis-form-page .form-select:focus {
+    outline: none;
+    border-color: #3454d1;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(52, 84, 209, .16), 0 2px 5px rgba(15, 23, 42, .06);
+}
+.lotesis-form-page .form-label {
+    display: inline-block;
+    margin-bottom: 5px;
+    color: #6b7280;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.lotesis-form-page .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%233454d1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 12px;
+    appearance: none;
+    padding-right: 40px;
+}
+.lotesis-form-page .form-check.form-switch .form-check-input {
+    width: 2.5em;
+    height: 1.35em;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .06);
+}
+.lotesis-form-page .form-check.form-switch .form-check-input:checked {
+    background-color: #3454d1 !important;
+    border-color: #3454d1 !important;
+}
+.lotesis-form-page .form-check.form-switch .form-check-input:not(:checked) {
+    background-color: #e5e7eb !important;
+    border-color: #d5dae3 !important;
+}
+.lotesis-form-page .form-check-label { color: #374151; font-size: .87rem; }
+.lotesis-form-page .input-group-text {
+    background: #eef1f6;
+    border: 1px solid #d5dae3;
+    color: #64748b;
+    font-size: .85rem;
+    font-weight: 700;
+}
+.lotesis-form-page textarea.form-control { font-size: .87rem; line-height: 1.5; }
+.lotesis-form-page .btn-light { border-color: #d5dae3; color: #374151; background: #fff; }
+.lotesis-form-page .btn-light:hover { background: #f3f4f6; border-color: #b8c2d0; }
+.lotesis-form-page .btn-primary:hover { filter: brightness(1.06); }
+.lotesis-form-page .form-control::placeholder { color: #9aa4b3; opacity: 1; }
+.lotesis-form-page .invalid-feedback, .lotesis-form-page .text-danger { font-size: .78rem; margin-top: 3px; }
+.lotesis-form-page .form-check-input:not(:checked) { border-color: #d5dae3; background-color: #fff; }
