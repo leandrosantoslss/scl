@@ -319,14 +319,13 @@ def gateway_editar(request, pk):
 
         form = ContaGatewayForm(data=request.POST, instance=conta)
         if form.is_valid():
-            form.save(commit=False)
-            form.instance.alterado_por = request.user
-            config_parsed = form.cleaned_data.pop("configuracao_texto", {})
             from django.db import transaction
 
             with transaction.atomic():
+                form.instance.alterado_por = request.user
                 instance = form.save()
-                if config_parsed:
+                config_parsed = form.configs_do_container()
+                if config_parsed.get("client_id"):
                     salvar_credenciais(conta=instance, configuracao=config_parsed, usuario=request.user)
             return redirect(reverse("financeiro:gateway-list"))
     else:

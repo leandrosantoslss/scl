@@ -75,26 +75,57 @@ class ConfiguracaoForm(WidgetBase):
 
 
 class ContaGatewayForm(WidgetBase):
-    configuracao_texto = forms.CharField(
+    """Formulário de Conta de Gateway com campos individuais para credenciais.
+
+    As credenciais são enviadas de forma segregada, validadas campo a campo
+    pelo Django, e depois encryptadas com Fernet e gravadas em
+    `conta.configuracao_criptografada` como um JSON único.
+    """
+
+    client_id = forms.CharField(
+        max_length=255,
         required=False,
-        label="Configuração JSON (client_id, client_secret, pix_key, certificate_path, certificate_password)",
-        widget=forms.Textarea(attrs={"rows": 8}),
+        label="Client ID",
+        help_text="Identificador público do provedor (Efí, Sicredi ou Sicoob).",
+    )
+    client_secret = forms.CharField(
+        max_length=512,
+        required=False,
+        label="Client Secret",
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        help_text="Segredo usado para autenticação OAuth2. Nunca fica em texto clara.",
+    )
+    pix_key = forms.CharField(
+        max_length=255,
+        required=False,
+        label="Chave PIX",
+        help_text="Chave PIX da empresa para emissor cobrança PIX.",
+    )
+    certificado_digital_base64 = forms.CharField(
+        required=False,
+        label="Certificado Digital (Base 64)",
+        widget=forms.Textarea(attrs={"rows": 4}),
+        help_text="Cole o conteúdo do certificado digital codificado em Base 64 (PEM).",
+    )
+    certificado_digital_senha = forms.CharField(
+        max_length=255,
+        required=False,
+        label="Senha do Certificado Digital",
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        help_text="Senha para abrir o certificado digital (mTLS).",
     )
 
     class Meta:
         model = ContaGateway
         fields = ("nome", "provedor", "ambiente", "habilita_boleto", "habilita_pix")
 
-    def clean_configuracao_texto(self):
-        import json as _json
-
-        texto = (self.cleaned_data.get("configuracao_texto") or "").strip()
-        if not texto:
-            return {}
-        try:
-            parsed = _json.loads(texto)
-        except Exception:
-            raise forms.ValidationError("Configuração deve ser um JSON válido.")
-        if not isinstance(parsed, dict):
-            raise forms.ValidationError("Configuração deve ser um objeto JSON ({}).")
-        return parsed
+    def configs_do_container(self):
+        """Retorna o dict de configuração coletado pelos campos individuais."""
+        return {
+            "client_id": (self.cleaned_data.get("client_id") or "").strip(),
+            "client_secret": (self.cleaned_data.get("client_secret") or "").strip(),
+            "pix_key": (self.cleaned_data.get("pix_key") or "").strip(),
+            "certificate_path": "inlineorary-excluded",
+            "certificate_base64": (self.cleaned_data.get("certificado_digital_base64") or "").strip(),
+            "certificate_password": (self.cleaned_data.get("certificado_digital_senha") or "").strip(),
+        }

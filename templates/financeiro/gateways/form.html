@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block title %}{% if conta %}Editar gateway{% else %}Novo gateway{% endif %} - SCL{% endblock %}
-{% block page_title %}{% if conta %}Editar gateway{% else %}Novo gateway{% endif %}{% endblock %}
+{% block page_title %}{% if conta %}Editar gateway{% else %}Nova conta de gateway{% endif %}{% endblock %}
 
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
     <li class="breadcrumb-item"><a href="{% url 'financeiro:gateway-list' %}">Gateways</a></li>
-    <li class="breadcrumb-item active">{% if conta %}Editar{% else %}Novo{% endif %}</li>
+    <li class="breadcrumb-item active">{% if conta %}Editar{% else %}Nova{% endif %}</li>
 {% endblock %}
 
 {% block page_actions %}
@@ -28,7 +28,7 @@
                     Nova Conta de Gateway
                 {% endif %}
             </h2>
-            <div class="text-muted small">Configuração do provedor de pagamento (Efí, Sicredi, Sicoob)</div>
+            <div class="text-muted small">Provedor de pagamento (Efí, Sicredi ou Sicoob)</div>
         </div>
     </div>
 
@@ -79,13 +79,13 @@
                     <div class="col-md-6">
                         <div class="form-check form-switch">
                             {{ form.habilita_boleto }}
-                            <label class="form-check-label" for="{{ form.habilita_boleto.id_for_label }}">{{ form.habilita_boleto.label }}</label>
+                            <label class="form-check-label" for="{{ form.habilita_boleto.id_for_label }}">Habilita Boleto</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-check form-switch">
                             {{ form.habilita_pix }}
-                            <label class="form-check-label" for="{{ form.habilita_pix.id_for_label }}">{{ form.habilita_pix.label }}</label>
+                            <label class="form-check-label" for="{{ form.habilita_pix.id_for_label }}">Habilita PIX</label>
                         </div>
                     </div>
                 </div>
@@ -94,17 +94,53 @@
 
         <div class="card border-0 shadow-sm mb-3">
             <div class="card-header bg-transparent border-0 py-3">
-                <h6 class="mb-0 fw-semibold"><i class="feather-lock me-1"></i> Configuração (JSON criptografado)</h6>
+                <h6 class="mb-0 fw-semibold">
+                    <i class="feather-lock me-1"></i> Credenciais (criptografadas com Fernet)
+                </h6>
             </div>
             <div class="card-body pt-0">
-                <label class="form-label" for="{{ form.configuracao_texto.id_for_label }}">Configuração JSON</label>
-                {{ form.configuracao_texto }}
-                <small class="text-muted d-block mt-1">
-                    Cole aqui o JSON contendo <code>client_id</code>, <code>client_secret</code>, <code>pix_key</code>,
-                    <code>certificate_path</code> e <code>certificate_password</code> (as últimas duas para mTLS). Após o
-                    envio, as credenciais são criptografadas com MultiFernet e nunca mais são exibidas em texto claro.
-                </small>
-                {% for error in form.configuracao_texto.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                {% if conta.configuracao_criptografada %}
+                    <div class="alert alert-info small" role="alert">
+                        As credenciais existentes são mantidas se você deixar os campos em branco ao editar.
+                        Para trocar, informe novamente as credenciais completas.
+                    </div>
+                {% endif %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.client_id.id_for_label }}">Client ID</label>
+                        {{ form.client_id }}
+                        {% for error in form.client_id.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        <small class="text-muted d-block">{{ form.client_id.help_text }}</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.client_secret.id_for_label }}">Client Secret</label>
+                        {{ form.client_secret }}
+                        {% for error in form.client_secret.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        <small class="text-muted d-block">{{ form.client_secret.help_text }}</small>
+                    </div>
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.pix_key.id_for_label }}">Chave PIX</label>
+                        {{ form.pix_key }}
+                        {% for error in form.pix_key.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        <small class="text-muted d-block">{{ form.pix_key.help_text }}</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="{{ form.certificado_digital_senha.id_for_label }}">Senha do certificado digital</label>
+                        {{ form.certificado_digital_senha }}
+                        {% for error in form.certificado_digital_senha.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        <small class="text-muted d-block">{{ form.certificado_digital_senha.help_text }}</small>
+                    </div>
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-12">
+                        <label class="form-label" for="{{ form.certificado_digital_base64.id_for_label }}">Certificado digital (Base 64 / PEM)</label>
+                        {{ form.certificado_digital_base64 }}
+                        {% for error in form.certificado_digital_base64.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        <small class="text-muted d-block">{{ form.certificado_digital_base64.help_text }}</small>
+                    </div>
+                </div>
             </div>
         </div>
 
