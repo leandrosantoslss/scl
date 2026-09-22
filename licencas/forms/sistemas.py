@@ -29,6 +29,30 @@ class SistemaForm(WidgetBase):
         fields = ("nome", "codigo", "ativo", "descricao")
 
     def __init__(self, *args, **kwargs):
+        from django.utils.text import slugify
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
             self.fields["codigo"].disabled = True
+
+    def clean_codigo(self):
+        """Codigo em branco → gera automaticamente slug(nome)+sufixo único."""
+        from django.utils.text import slugify
+
+        codigo = (self.cleaned_data.get("codigo") or "").strip()
+        if codigo:
+            return codigo
+
+        base = slugify(self.cleaned_data.get("nome") or "") or "sistema"
+        candidate = base
+        counter = 2
+        while (
+            Sistema.objects.filter(codigo=candidate)
+            .exclude(pk=self.instance.pk)
+            .exists()
+        ):
+            candidate = f"{base}-{counter}"
+            counter += 1
+        # marca o widget para exibir o valor gerado
+        self.fields["codigo"].widget.attrs["placeholder"] = candidate
+        self.cleaned_data["codigo"] = candidate
+        return candidate
