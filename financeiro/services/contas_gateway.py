@@ -1,13 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
-from financeiro.crypto import encrypt_config
+from financeiro.crypto import decrypt_config, encrypt_config
 from portal.audit import registrar_evento_auditoria
 
 
 REQUIRED_KEYS = {
     "efi": {"client_id", "client_secret"},
-    "sicredi": {"chave_acesso", "client_id", "client_secret"},
+    "sicredi": {"api_key", "client_id", "client_secret"},
     "sicoob": {"client_id", "client_secret"},
 }
 
@@ -30,7 +30,11 @@ def chaves_obrigatorias(provedor):
 
 def validar_configuracao(conta, configuracao):
     """Chaves obrigatórias por provedor; valores nunca são devolvidos."""
-    faltantes = chaves_obrigatorias(conta.provedor) - set(configuracao.keys())
+    faltantes = {
+        chave
+        for chave in chaves_obrigatorias(conta.provedor)
+        if not configuracao.get(chave)
+    }
     if faltantes:
         raise ValidationError(
             {
@@ -41,9 +45,16 @@ def validar_configuracao(conta, configuracao):
 
 @transaction.atomic
 def salvar_credenciais(conta, *, configuracao, usuario):
-    validar_configuracao(conta, configuracao)
+    atual = {}
+    if conta.configuracao_criptografada:
+        atual = decrypt_config(conta.configuracao_criptografada)
+    configuracao_final = dict(atual)
+    configuracao_final.update(
+        {chave: valor for chave, valor in configuracao.items() if valor not in (None, "")}
+    )
+    validar_configuracao(conta, configuracao_final)
 
-    ciphertext = encrypt_config(configuracao)
+    ciphertext = encrypt_config(configuracao_final)
     conta.configuracao_criptografada = ciphertext
     conta.alterado_por = usuario
     conta.full_clean()

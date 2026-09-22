@@ -1,14 +1,17 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
+from django.db import transaction
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 
-from financeiro.forms import ConfiguracaoForm, MotivoForm, PagamentoManualForm
-from financeiro.models import Cobranca, ConfiguracaoFinanceira, Pagamento
+from financeiro.forms import ConfiguracaoForm, ContaGatewayForm, MotivoForm, PagamentoManualForm
+from financeiro.models import Cobranca, ConfiguracaoFinanceira, ContaGateway, EmissaoCobranca, Pagamento
 from financeiro.selectors import saldo_cobranca
+from financeiro.services import contas_gateway
+from financeiro.services import emissoes as emissoes_services
 from financeiro.services import pagamentos as pagamento_services
 from financeiro.services import configuracao as config_services
 from portal.permissions import group_required
@@ -183,10 +186,7 @@ def pagamento_list(request):
     )
 
 
-from financeiro.services import emissoes as emissoes_services
-from financeiro.models import ContaGateway, EmissaoCobranca
 import secrets
-from django.http import HttpResponseNotAllowed
 
 
 def _financeiro_required(request):
@@ -253,11 +253,6 @@ def emissao_cancelar(request, pk):
     return redirect(reverse("financeiro:cobranca-detail", args=[emissao.cobranca_id]))
 
 
-from financeiro.forms import ContaGatewayForm
-from financeiro.services import contas_gateway
-import os, json as _json  # noqa: F401
-
-
 def _admin_required(request):
     from django.core.exceptions import PermissionDenied
 
@@ -276,28 +271,25 @@ def gateway_list(request):
 def gateway_create(request):
     _admin_required(request)
     if request.method == "POST":
-        form = ContaGatewayForm(data=request.POST)
+        form = ContaGatewayForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            from financeiro.crypto import encrypt_config
-            if form.cleaned_data.get("configuracao_texto"):
-                try:
-                    import json as _js
-                    parsed = _js.loads(form.cleaned_data.get("configuracao_texto") or "{}")
-                except Exception:
-                    pass
-            form.save(commit=False)
-            config_parsed = form.cleaned_data.pop("configuracao_texto", {})
-            form.cleaned_data["configuracao_criptografada"] = ""
-            with transaction.atomic():
-                conta = form.save(commit=False)
-                conta.configuracao_criptografada = ""
-                # será substituído no salvar_credenciais
-                conta.full_clean()
-                conta.save()
-                from financeiro.services.contas_gateway import salvar_credenciais
-                if config_parsed:
-                    salvar_credenciais(conta=conta, configuracao=config_parsed, usuario=request.user)
-            return redirect(reverse("financeiro:gateway-list"))
+            configuracao = form.configuracao_credenciais()
+            try:
+                with transaction.atomic():
+                    conta = form.save(commit=False)
+                    conta.criado_por = request.user
+                    conta.alterado_por = request.user
+                    conta.full_clean()
+                    conta.save()
+                    contas_gateway.salvar_credenciais(
+                        conta=conta,
+                        configuracao=configuracao,
+                        usuario=request.user,
+                    )
+            except ValidationError as error:
+                form.add_error(None, error)
+            else:
+                return redirect(reverse("financeiro:gateway-list"))
     else:
         form = ContaGatewayForm()
     return render(request, "financeiro/gateways/form.html", {"form": form})
@@ -315,19 +307,22 @@ def gateway_editar(request, pk):
     _admin_required(request)
     conta = get_object_or_404(ContaGateway, pk=pk)
     if request.method == "POST":
-        from financeiro.services.contas_gateway import salvar_credenciais
-
-        form = ContaGatewayForm(data=request.POST, instance=conta)
+        form = ContaGatewayForm(data=request.POST, files=request.FILES, instance=conta)
         if form.is_valid():
-            from django.db import transaction
-
-            with transaction.atomic():
-                form.instance.alterado_por = request.user
-                instance = form.save()
-                config_parsed = form.configs_do_container()
-                if config_parsed.get("client_id"):
-                    salvar_credenciais(conta=instance, configuracao=config_parsed, usuario=request.user)
-            return redirect(reverse("financeiro:gateway-list"))
+            configuracao = form.configuracao_credenciais()
+            try:
+                with transaction.atomic():
+                    form.instance.alterado_por = request.user
+                    instance = form.save()
+                    contas_gateway.salvar_credenciais(
+                        conta=instance,
+                        configuracao=configuracao,
+                        usuario=request.user,
+                    )
+            except ValidationError as error:
+                form.add_error(None, error)
+            else:
+                return redirect(reverse("financeiro:gateway-list"))
     else:
         form = ContaGatewayForm(instance=conta)
     return render(request, "financeiro/gateways/form.html", {"form": form, "conta": conta})

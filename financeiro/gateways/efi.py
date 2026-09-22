@@ -2,8 +2,8 @@
 
 Credenciais em `ContaGateway.configuracao_criptografada`:
 - client_id, client_secret
-- certificate_path / certificate_password (mTLS)
-- pix_key (para PIX)
+- certificate_base64 / certificate_password (mTLS)
+- api_key (quando o provedor exigir uma chave PIX/API)
 - ambiente ("sandbox" | "producao")
 
 Roteamento de webhooks e URLs de produção sofisticados devem ser
@@ -114,7 +114,7 @@ class EfiAdapter:
         payload = {
             "calendario": {"expiracao": 3600 if meio == "pix" else 259200},
             "valor": {"original": f"{float(valor_original or '0'):.2f}"},
-            "chave": self._config.get("pix_key"),
+            "chave": self._config.get("api_key") or self._config.get("pix_key"),
             "solicitacaoPagador": "Pagamento conforme solicitado",
         }
         path_extra = "v" if meio == "boleto" else ""

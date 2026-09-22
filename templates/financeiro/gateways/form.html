@@ -45,7 +45,7 @@
         </div>
     {% endif %}
 
-    <form method="post" novalidate>
+    <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
 
         <div class="card border-0 shadow-sm mb-3">
@@ -121,10 +121,10 @@
                 </div>
                 <div class="row g-3 mt-1">
                     <div class="col-md-6">
-                        <label class="form-label" for="{{ form.pix_key.id_for_label }}">Chave PIX</label>
-                        {{ form.pix_key }}
-                        {% for error in form.pix_key.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                        <small class="text-muted d-block">{{ form.pix_key.help_text }}</small>
+                        <label class="form-label" for="{{ form.api_key.id_for_label }}">API Key</label>
+                        {{ form.api_key }}
+                        {% for error in form.api_key.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        <small class="text-muted d-block">{{ form.api_key.help_text }}</small>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="{{ form.certificado_digital_senha.id_for_label }}">Senha do certificado digital</label>
@@ -135,10 +135,10 @@
                 </div>
                 <div class="row g-3 mt-1">
                     <div class="col-12">
-                        <label class="form-label" for="{{ form.certificado_digital_base64.id_for_label }}">Certificado digital (Base 64 / PEM)</label>
-                        {{ form.certificado_digital_base64 }}
-                        {% for error in form.certificado_digital_base64.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                        <small class="text-muted d-block">{{ form.certificado_digital_base64.help_text }}</small>
+                        <label class="form-label" for="{{ form.certificado_pfx.id_for_label }}">Certificado digital PFX/P12</label>
+                        {{ form.certificado_pfx }}
+                        {% for error in form.certificado_pfx.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                        <small class="text-muted d-block">{{ form.certificado_pfx.help_text }}</small>
                     </div>
                 </div>
             </div>

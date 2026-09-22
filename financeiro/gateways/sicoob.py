@@ -2,8 +2,8 @@
 
 Credenciais em `ContaGateway.configuracao_criptografada`:
 - client_id, client_secret
-- certificate_path / certificate_password (mTLS Sicoob)
-- pix_key (para PIX)
+- certificate_base64 / certificate_password (mTLS Sicoob)
+- api_key (para PIX, quando exigido pelo convênio)
 - ambiente ("sandbox" | "producao")
 
 Spec em `_reversa_sdd/specs/gateway/sicoob.md`.
@@ -87,7 +87,7 @@ class SicoobAdapter:
         payload = {
             "calendario": {"expiracao": 3600 if meio == "pix" else 259200},
             "valor": {"original": valor_original},
-            "chave": self._config.get("pix_key"),
+            "chave": self._config.get("api_key") or self._config.get("pix_key"),
             "solicitacaoPagador": "Pagamento acordo",
         }
         response = httpx.post(

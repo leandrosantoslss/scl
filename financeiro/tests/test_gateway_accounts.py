@@ -1,9 +1,14 @@
+import base64
+
 import pytest
 from cryptography.fernet import Fernet
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.urls import reverse
 
 from financeiro.crypto import decrypt_config
+from financeiro.forms import ContaGatewayForm
 from financeiro.models import ContaGateway, EventoGateway, Pagamento  # noqa: F401
 from financeiro.services import contas_gateway
 from portal.models import EventoAuditoria
@@ -61,3 +66,81 @@ def test_ativar_e_desativar_audita(encryption_keys, conta_efi):
     conta_efi.refresh_from_db()
     assert conta_efi.ativo is True
     assert EventoAuditoria.objects.filter(acao="conta_gateway.ativada", objeto_id=str(conta_efi.public_id)).exists()
+
+
+def test_form_converte_certificado_pfx_para_base64():
+    certificado = b"certificado-pfx-de-teste"
+    form = ContaGatewayForm(
+        data={
+            "nome": "Efí Sandbox",
+            "provedor": "efi",
+            "ambiente": "sandbox",
+            "habilita_pix": "on",
+            "client_id": "client-id",
+            "client_secret": "client-secret",
+            "api_key": "api-key",
+            "certificado_digital_senha": "senha-certificado",
+        },
+        files={
+            "certificado_pfx": SimpleUploadedFile(
+                "certificado.pfx", certificado, content_type="application/x-pkcs12"
+            )
+        },
+    )
+
+    assert form.is_valid(), form.errors
+    configuracao = form.configuracao_credenciais()
+
+    assert configuracao["api_key"] == "api-key"
+    assert configuracao["certificate_base64"] == base64.b64encode(certificado).decode("ascii")
+    assert configuracao["certificate_password"] == "senha-certificado"
+
+
+def test_form_rejeita_certificado_com_extensao_invalida():
+    form = ContaGatewayForm(
+        data={
+            "nome": "Efí Sandbox",
+            "provedor": "efi",
+            "ambiente": "sandbox",
+            "habilita_pix": "on",
+            "client_id": "client-id",
+            "client_secret": "client-secret",
+        },
+        files={
+            "certificado_pfx": SimpleUploadedFile(
+                "certificado.txt", b"nao-e-pfx", content_type="text/plain"
+            )
+        },
+    )
+
+    assert not form.is_valid()
+    assert "certificado_pfx" in form.errors
+
+
+@pytest.mark.django_db
+def test_gateway_create_persiste_certificado_criptografado(encryption_keys, client):
+    usuario = get_user_model().objects.create_superuser("adm", "adm@example.com", "s")
+    client.force_login(usuario)
+    certificado = b"certificado-pfx-de-teste"
+
+    response = client.post(
+        reverse("financeiro:gateway-create"),
+        data={
+            "nome": "Efí Sandbox",
+            "provedor": "efi",
+            "ambiente": "sandbox",
+            "habilita_pix": "on",
+            "client_id": "client-id",
+            "client_secret": "client-secret",
+            "api_key": "api-key",
+            "certificado_digital_senha": "senha-certificado",
+            "certificado_pfx": SimpleUploadedFile("certificado.pfx", certificado),
+        },
+    )
+
+    assert response.status_code == 302
+    conta = ContaGateway.objects.get(nome="Efí Sandbox")
+    configuracao = decrypt_config(conta.configuracao_criptografada)
+    assert configuracao["certificate_base64"] == base64.b64encode(certificado).decode("ascii")
+    assert configuracao["certificate_password"] == "senha-certificado"
+    assert "certificado-pfx-de-teste" not in conta.configuracao_criptografada
