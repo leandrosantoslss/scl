@@ -1,3 +1,4 @@
+from core.notifications import notify_users
 from decimal import Decimal
 
 from django.core.exceptions import ValidationError
@@ -44,6 +45,11 @@ def registrar_pagamento_manual(*, cobranca, valor, pago_em, forma, usuario):
 
     _atualizar_status_cobranca(locked)
     _auditar(pagamento, acao="pagamento.registrado", usuario=usuario)
+    notify_users(
+        "Pagamento registrado",
+        f"Cobrança {cobranca.competencia} recebeu R$ {valor_decimal} de {forma}",
+        "",
+    )
     return pagamento
 
 
@@ -73,6 +79,11 @@ def estornar_pagamento(*, pagamento, motivo, usuario):
 
     _atualizar_status_cobranca(locked_cobranca)
     _auditar(locked_pagamento, acao="pagamento.estornado", usuario=usuario, motivo=motivo)
+    notify_users(
+        "Pagamento estornado",
+        f"Cobrança {locked_cobranca.competencia}: R$ {locked_pagamento.valor} estornado ({motivo})",
+        "",
+    )
     return locked_pagamento
 
 
@@ -97,4 +108,9 @@ def cancelar_cobranca_scl(*, cobranca, motivo, usuario):
     locked.motivo_cancelamento = motivo
     locked.save()
     _auditar(locked, acao="cobranca.cancelada", usuario=usuario, motivo=motivo)
+    notify_users(
+        "Cobrança cancelada",
+        f"Cobrança {locked.competencia} de {locked.assinatura.cliente.nome} cancelada ({motivo})",
+        "",
+    )
     return locked

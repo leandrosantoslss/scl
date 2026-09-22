@@ -1,3 +1,4 @@
+from core.notifications import notify_users
 from datetime import timedelta
 
 from django.db import IntegrityError, transaction
@@ -77,6 +78,11 @@ def gerar_cobrancas_assinatura(assinatura, *, ate):
         cobranca, criada = _obter_ou_criar(assinatura, vencimento)
         if criada:
             charge_criadas.append(cobranca)
+            notify_users(
+                "Nova cobrança gerada",
+                f"{assinatura.cliente.nome} — vence em {cobranca.vencimento:%d/%m/%Y} (R$ {cobranca.valor_original})",
+                "",
+            )
         vencimento = vencimento + avanco
     return charge_criadas
 
