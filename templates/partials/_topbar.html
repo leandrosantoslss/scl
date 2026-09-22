@@ -12,6 +12,19 @@
         <div class="header-right ms-auto">
             <div class="d-flex align-items-center gap-3">
                 <span class="topbar-company d-none d-md-inline-block" title="Sistema de Controle de Licenças">SCL</span>
+
+                <div class="nxl-h-item fullscreen-switcher">
+                    <a href="#" class="nxl-head-link me-0 fullscreen-toggle" id="fullscreen-toggle" aria-label="Tela cheia" title="Tela cheia">
+                        <i class="feather-maximize maximize"></i><i class="feather-minimize minimize"></i>
+                    </a>
+                </div>
+
+                <div class="nxl-h-item dark-light-theme">
+                    <a href="#" class="nxl-head-link me-0 theme-toggle" id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
+                        <i class="feather-moon" id="theme-toggle-icon"></i>
+                    </a>
+                </div>
+
                 <div class="nxl-h-item topbar-dropdown" id="profile-dropdown-wrapper">
                     <a href="#" class="nxl-head-link me-0 d-flex align-items-center gap-2" id="profile-dropdown-toggle" role="button" aria-expanded="false">
                         <span class="lotesis-user-initials">{{ user.get_username|slice:":2"|upper }}</span>

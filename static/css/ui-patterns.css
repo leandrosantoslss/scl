@@ -1,18 +1,18 @@
 /* Padrões compartilhados de interface do LoteSis. */
 :root {
-    --bs-primary: #17804b;
-    --bs-primary-rgb: 23, 128, 75;
+    --bs-primary: #3454d1;
+    --bs-primary-rgb: 52, 84, 209;
 }
 
-.bg-primary { background-color: #17804b !important; }
-.text-primary { color: #17804b !important; }
-.border-primary { border-color: #17804b !important; }
-.btn-primary { border-color: #17804b !important; background-color: #17804b !important; }
-.btn-primary:hover, .btn-primary:focus { border-color: #12663b !important; background-color: #12663b !important; }
-.btn-outline-primary { border-color: #17804b !important; color: #17804b !important; }
-.btn-outline-primary:hover, .btn-outline-primary:focus { border-color: #17804b !important; background-color: #17804b !important; color: #fff !important; }
-input[type="checkbox"], input[type="radio"] { accent-color: #17804b; }
-.form-check-input:checked { border-color: #17804b !important; background-color: #17804b !important; }
+.bg-primary { background-color: #3454d1 !important; }
+.text-primary { color: #3454d1 !important; }
+.border-primary { border-color: #3454d1 !important; }
+.btn-primary { border-color: #3454d1 !important; background-color: #3454d1 !important; }
+.btn-primary:hover, .btn-primary:focus { border-color: #2632c4 !important; background-color: #2632c4 !important; }
+.btn-outline-primary { border-color: #3454d1 !important; color: #3454d1 !important; }
+.btn-outline-primary:hover, .btn-outline-primary:focus { border-color: #3454d1 !important; background-color: #3454d1 !important; color: #fff !important; }
+input[type="checkbox"], input[type="radio"] { accent-color: #3454d1; }
+.form-check-input:checked { border-color: #3454d1 !important; background-color: #3454d1 !important; }
 
 .standard-filter-panel {
     margin: 0 0 12px;
@@ -66,7 +66,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: #17804b; }
 .standard-filter-grid .filter-select:focus {
     outline: none;
     border-color: #10b981;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, .18);
+    box-shadow: 0 0 0 3px rgba(52, 84, 209, .18);
 }
 
 .standard-filter-grid .filter-submit {
@@ -100,8 +100,8 @@ input[type="checkbox"], input[type="radio"] { accent-color: #17804b; }
 
 .pagination.pagination-sm .page-item.active .page-link,
 .pagination.pagination-sm .page-item .page-link:hover {
-    border-color: #17804b;
-    background-color: #17804b;
+    border-color: #3454d1;
+    background-color: #3454d1;
     color: #fff;
 }
 

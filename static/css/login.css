@@ -1,9 +1,9 @@
 :root {
-    --bg: #0f172a;
+    --bg: #1b2436;
     --panel: #111827;
     --text: #e5e7eb;
     --muted: #94a3b8;
-    --accent: #10b981;
+    --accent: #3454d1;
     --danger: #ef4444;
     --login-card-w: 420px;
 }
@@ -25,10 +25,10 @@ html { font-size: clamp(14px, 1vw, 16px); }
 .login-footer .lf-title { font-weight: 700; margin-bottom: 4px; }
 .login-footer .lf-sub { opacity: .9; }
 .login-footer .lf-contact { display: flex; align-items: center; justify-content: space-evenly; padding: 0 16px; margin: 4px 0; transform: translateX(-8px); }
-.login-footer .lf-contact a { color: #0f766e; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 120px; }
+.login-footer .lf-contact a { color: #2b3a95; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 120px; }
 .login-footer .lf-contact a:hover { text-decoration: underline; }
 .login-footer .lf-contact .sep { opacity: .5; }
-.login-footer .lf-contact .contact-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(15, 118, 110, .12); color: #0f766e; }
+.login-footer .lf-contact .contact-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(15, 118, 110, .12); color: #2b3a95; }
 .login-footer .lf-contact .contact-icon img { max-width: 100%; max-height: 100%; }
 .login-footer .lf-contact .contact-icon svg { display: block; }
 .login-footer .lf-contact .contact-text { line-height: 1; }
@@ -40,14 +40,14 @@ html { font-size: clamp(14px, 1vw, 16px); }
 .login-form .input { display: block; width: 100%; height: 50px; padding: 12px 14px 12px 42px; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; color: #0f2a1d; font-size: 15px; line-height: 1.2; box-shadow: 0 2px 5px rgba(15,23,42,.05); transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease; }
 .login-form .input::placeholder { color: #64748b; opacity: 1; }
 .login-form .input:hover { border-color: #94a3b8; }
-.login-form .input:focus { outline: none; border-color: #17804b; background: #fff; box-shadow: 0 0 0 3px rgba(23,128,75,.16), 0 3px 8px rgba(15,23,42,.08); }
+.login-form .input:focus { outline: none; border-color: #3454d1; background: #fff; box-shadow: 0 0 0 3px rgba(52,84,209,.16), 0 3px 8px rgba(15,23,42,.08); }
 .login-form .field { position: relative; display: block; margin-bottom: 14px; }
 .login-form .icon-left { position: absolute; left: 14px; top: 25px; transform: translateY(-50%); width: 18px; height: 18px; color: #64748b; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-.login-form .field:focus-within .icon-left { color: #17804b; }
+.login-form .field:focus-within .icon-left { color: #3454d1; }
 .login-form .btn { width: 100%; padding: 12px 14px; font-size: 16px; border-radius: 10px; margin-top: 4px; }
 .login-help-link { margin-top: 14px; text-align: center; font-size: 13px; }
 .login-help-link a, .auth-back-link { color: #166534; font-weight: 600; text-decoration: none; }
-.login-help-link a:hover, .auth-back-link:hover { color: #14532d; text-decoration: underline; }
+.login-help-link a:hover, .auth-back-link:hover { color: #1b2436; text-decoration: underline; }
 .auth-secondary-page { position: relative; display: flex; min-height: 100dvh; align-items: center; justify-content: center; padding: 32px 20px; background: #0b1220 url("../images/lotes-bg.jpg") center / cover no-repeat; }
 .auth-secondary-card { width: min(460px, 100%); padding: 28px; text-align: left; }
 .auth-secondary-card .login-title { margin-bottom: 10px; }
@@ -55,7 +55,7 @@ html { font-size: clamp(14px, 1vw, 16px); }
 .auth-form .auth-field { margin-bottom: 16px; }
 .auth-form .auth-field label { display: block; margin-bottom: 6px; color: #334155; font-size: .82rem; font-weight: 700; }
 .auth-form .form-control { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: #0f172a; }
-.auth-form .form-control:focus { border-color: #17804b; box-shadow: 0 0 0 3px rgba(23,128,75,.14); outline: 0; }
+.auth-form .form-control:focus { border-color: #3454d1; box-shadow: 0 0 0 3px rgba(52,84,209,.14); outline: 0; }
 .auth-form .btn { width: 100%; margin-top: 4px; }
 .auth-back-link { display: block; margin-top: 18px; text-align: center; font-size: .85rem; }
 .auth-success-icon { display: flex; width: 56px; height: 56px; align-items: center; justify-content: center; margin: 4px auto 16px; border-radius: 50%; background: #dcfce7; color: #15803d; font-size: 1.5rem; }
@@ -63,7 +63,7 @@ html.app-skin-dark .auth-secondary-card { background: #121a2d; border-color: #33
 html.app-skin-dark .auth-description { color: #94a3b8; }
 html.app-skin-dark .auth-form .auth-field label { color: #cbd5e1; }
 html.app-skin-dark .auth-form .form-control { border-color: #475569; background: #1b2436; color: #e5e7eb; }
-html.app-skin-dark .auth-success-icon { background: #14532d; color: #86efac; }
+html.app-skin-dark .auth-success-icon { background: #1b2436; color: #86efac; }
 .btn { padding: 8px 12px; border: 1px solid var(--muted); background: var(--panel); color: var(--text); border-radius: 8px; cursor: pointer; transition: filter .15s ease, background-color .15s ease, box-shadow .15s ease; }
 .btn.primary { border-color: #166534; background: #166534; color: #fff; }
 .btn:hover { filter: brightness(1.05); }
