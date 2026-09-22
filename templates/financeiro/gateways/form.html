@@ -1,53 +1,92 @@
 {% extends "base_app.html" %}
+{% load static %}
 
-{% block title %}{% if conta %}Editar gateway{% else %}Nova gateway{% endif %}{% endblock %}
-{% block page_title %}{% if conta %}Editar Gateway{% else %}Novo Gateway{% endif %}{% endblock %}
+{% block title %}{% if conta %}Editar gateway{% else %}Novo gateway{% endif %} - SCL{% endblock %}
+{% block page_title %}{% if conta %}Editar gateway{% else %}Novo gateway{% endif %}{% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
-<li class="breadcrumb-item"><a href="{% url 'financeiro:gateway-list' %}">Gateway</a></li>
-<li class="breadcrumb-item active">…</li>
+    <li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'financeiro:gateway-list' %}">Gateways</a></li>
+    <li class="breadcrumb-item active">{% if conta %}Editar{% else %}Novo{% endif %}</li>
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{% url 'financeiro:gateway-list' %}" class="btn btn-light btn-sm">
+        <i class="feather-arrow-left me-1"></i> Voltar
+    </a>
 {% endblock %}
 
 {% block content %}
 <div class="lotesis-form-page">
-    <div class="p-3 bg-white shadow-sm rounded mb-3">
-        <h2 class="h5 mb-1 fw-semibold">{% if conta %}Editar — {{ conta.nome }}{% else %}Nova conta de Gateway{% endif %}</h2>
-        <div class="text-muted small">Configuração do provedor de pagamento</div>
+
+    <div class="d-flex align-items-center justify-content-between p-3 bg-white shadow-sm rounded mb-3">
+        <div>
+            <h2 class="h5 mb-1 fw-semibold">
+                {% if conta %}
+                    Editar Gateway — {{ conta.nome }}
+                {% else %}
+                    Nova Conta de Gateway
+                {% endif %}
+            </h2>
+            <div class="text-muted small">Configuração do provedor de pagamento (Efí, Sicredi, Sicoob)</div>
+        </div>
     </div>
 
-    {% if form.non_field_errors %}<div class="alert alert-danger alert-dismissible">{% for e in form.non_field_errors %}{{ e }}{% endfor %}</div>{% endif %}
+    {% if form.non_field_errors or form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+            <ul class="mb-0 ps-3">
+                {% for field, errors in form.errors.items %}
+                    {% if field != '__all__' %}
+                        {% for error in errors %}<li>{{ error }}</li>{% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
     <form method="post" novalidate>
         {% csrf_token %}
+
         <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-transparent border-0 py-3"><h6 class="mb-0 fw-semibold"><i class="feather-credit-card me-1"></i> Identificação</h6></div>
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold"><i class="feather-credit-card me-1"></i> Identificação</h6>
+            </div>
             <div class="card-body pt-0">
                 <div class="row g-3">
                     <div class="col-md-5">
-                        <label class="form-label">{{ form.nome.label }}</label>{{ form.nome }}
+                        <label class="form-label" for="{{ form.nome.id_for_label }}">Nome da conta</label>
+                        {{ form.nome }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="{{ form.provedor.id_for_label }}">Provedor</label>
+                        {{ form.provedor }}
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">{{ form.provedor.label }}</label>{{ form.provedor }}
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">{{ form.ambiente.label }}</label>{{ form.ambiente }}
+                        <label class="form-label" for="{{ form.ambiente.id_for_label }}">Ambiente</label>
+                        {{ form.ambiente }}
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-transparent border-0 py-3"><h6 class="mb-0 fw-semibold"><i class="feather-toggle-right me-1"></i> Meios de pagamento</h6></div>
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold"><i class="feather-toggle-right me-1"></i> Meios de pagamento</h6>
+            </div>
             <div class="card-body pt-0">
-                <div class="d-flex flex-wrap gap-4">
-                    <div class="form-check form-switch">
-                        {{ form.habilita_boleto }}
-                        <label class="form-check-label" for="{{ form.habilita_boleto.id_for_label }}">{{ form.habilita_boleto.label }}</label>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-check form-switch">
+                            {{ form.habilita_boleto }}
+                            <label class="form-check-label" for="{{ form.habilita_boleto.id_for_label }}">{{ form.habilita_boleto.label }}</label>
+                        </div>
                     </div>
-                    <div class="form-check form-switch">
-                        {{ form.habilita_pix }}
-                        <label class="form-check-label" for="{{ form.habilita_pix.id_for_label }}">{{ form.habilita_pix.label }}</label>
+                    <div class="col-md-6">
+                        <div class="form-check form-switch">
+                            {{ form.habilita_pix }}
+                            <label class="form-check-label" for="{{ form.habilita_pix.id_for_label }}">{{ form.habilita_pix.label }}</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,17 +97,25 @@
                 <h6 class="mb-0 fw-semibold"><i class="feather-lock me-1"></i> Configuração (JSON criptografado)</h6>
             </div>
             <div class="card-body pt-0">
-                <label class="form-label" for="{{ form.configuracao_texto.id_for_label }}">{{ form.configuracao_texto.label }}</label>
+                <label class="form-label" for="{{ form.configuracao_texto.id_for_label }}">Configuração JSON</label>
                 {{ form.configuracao_texto }}
-                <small class="text-muted d-block mt-1">Credenciais são criptografadas com Fernet e nunca retornam em texto claro após o envio.</small>
+                <small class="text-muted d-block mt-1">
+                    Cole aqui o JSON contendo <code>client_id</code>, <code>client_secret</code>, <code>pix_key</code>,
+                    <code>certificate_path</code> e <code>certificate_password</code> (as últimas duas para mTLS). Após o
+                    envio, as credenciais são criptografadas com MultiFernet e nunca mais são exibidas em texto claro.
+                </small>
                 {% for error in form.configuracao_texto.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
             </div>
         </div>
 
         <div class="card border-0 shadow-sm">
             <div class="card-body d-flex flex-wrap gap-2 py-3">
-                <a href="{% url 'financeiro:gateway-list' %}" class="btn btn-light"><i class="feather-arrow-left me-1"></i> Voltar</a>
-                <button type="submit" class="btn btn-primary"><i class="feather-check me-1"></i> Salvar</button>
+                <a href="{% url 'financeiro:gateway-list' %}" class="btn btn-light">
+                    <i class="feather-arrow-left me-1"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="feather-check me-1"></i> Salvar
+                </button>
             </div>
         </div>
     </form>
