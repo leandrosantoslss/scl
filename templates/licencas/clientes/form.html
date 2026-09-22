@@ -49,7 +49,13 @@
                     </div>
                     <div class="col-md-3">
                         <label class="form-label" for="{{ form.cnpjcpf.id_for_label }}">{{ form.cnpjcpf.label }}</label>
-                        {{ form.cnpjcpf }}
+                        <div class="input-group">
+                            {{ form.cnpjcpf }}
+                            <button id="lookup-cnpj" class="btn btn-outline-primary" type="button" title="Buscar CNPJ" aria-label="Buscar CNPJ">
+                                <i class="feather-search"></i>
+                            </button>
+                        </div>
+                        <small id="cnpj-lookup-hint" class="text-muted" style="font-size:.74rem"></small>
                     </div>
                     <div class="col-md-3">
                         <div class="form-check form-switch mt-4">
@@ -87,7 +93,12 @@
                 <div class="row g-3">
                     <div class="col-md-3">
                         <label class="form-label" for="{{ form.cep.id_for_label }}">CEP</label>
-                        {{ form.cep }}
+                        <div class="input-group">
+                            {{ form.cep }}
+                            <button id="lookup-zip" class="btn btn-outline-primary" type="button" title="Buscar CEP">
+                                <i class="feather-search"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="{{ form.endereco.id_for_label }}">Logradouro</label>
@@ -159,4 +170,8 @@
     <form method="post" id="dummy-form" style="display:none"></form>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/client-form.js' %}?v=1"></script>
 {% endblock %}
