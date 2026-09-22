@@ -1,8 +1,23 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block design_system_css %}{% endblock %}
-{% block design_system_js %}{% endblock %}
-
+{% block body_class %}auth-body{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}?v=1">
+{% endblock %}
 {% block body %}
-    {% block auth_content %}{% endblock %}
+<main class="auth-layout">
+    <section class="auth-panel">
+        <a class="brand-mark" href="{% url 'login' %}">
+            <img src="{% static 'images/logo.png' %}" alt="SCL" class="brand-logo" style="width:36px;height:36px;font-weight:700;">
+            <span><strong>SCL</strong><small>Sistema de Controle de Licenças</small></span>
+        </a>
+        {% block auth_content %}{% endblock %}
+    </section>
+    <aside class="auth-aside" aria-label="Informações do produto">
+        <span class="aside-kicker">EkklesiaSoft</span>
+        <h2>Licenças no lugar certo.</h2>
+        <p>Centralize clientes, assinaturas, cobranças e licenças da sua softhouse em um único portal.</p>
+    </aside>
+</main>
 {% endblock %}
