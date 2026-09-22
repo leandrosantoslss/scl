@@ -74,7 +74,7 @@ class ConfiguracaoForm(WidgetBase):
         return carência
 
 
-class ContaGatewayForm(forms.ModelForm):
+class ContaGatewayForm(WidgetBase):
     configuracao_texto = forms.CharField(
         required=False,
         label="Configuração JSON (client_id, client_secret, pix_key, certificate_path, certificate_password)",
