@@ -28,9 +28,18 @@
         </div>
     </div>
 
-    {% if form.non_field_errors %}
+    {% if form.non_field_errors or form.errors %}
         <div class="alert alert-danger mt-3" role="alert">
             {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+            <ul class="mb-0 ps-3">
+                {% for field, errors in form.errors.items %}
+                    {% if field != '__all__' %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
         </div>
     {% endif %}
 
@@ -127,10 +136,8 @@
                         {{ form.endcidade }}
                     </div>
                 </div>
-                <div class="row g-3 mt-1 d-none">
-                    <div class="col-md-3">{{ form.endcodpais }}</div>
-                    <div class="col-md-9">{{ form.endpais }}</div>
-                </div>
+                <input type="hidden" name="endcodpais" value="55">
+                <input type="hidden" name="endpais" value="Brasil">
             </div>
         </div>
 
