@@ -19,4 +19,9 @@ urlpatterns = [
     path("cobrancas/<int:cobranca_pk>/emissoes/nova/", views.emissao_criar, name="emissao-criar"),
     path("emissoes/<int:pk>/", views.emissao_detalhar, name="emissao-detalhar"),
     path("emissoes/<int:pk>/cancelar/", views.emissao_cancelar, name="emissao-cancelar"),
+    path("gateways/", views.gateway_list, name="gateway-list"),
+    path("gateways/nova/", views.gateway_create, name="gateway-create"),
+    path("gateways/<int:pk>/", views.gateway_detail, name="gateway-detail"),
+    path("gateways/<int:pk>/editar/", views.gateway_editar, name="gateway-editar"),
+    path("gateways/<int:pk>/toggle/", views.gateway_ativar_desativar, name="gateway-toggle"),
 ]

@@ -1,0 +1,76 @@
+{% extends "base_app.html" %}
+
+{% block title %}{% if conta %}Editar gateway{% else %}Nova gateway{% endif %}{% endblock %}
+{% block page_title %}{% if conta %}Editar Gateway{% else %}Novo Gateway{% endif %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
+<li class="breadcrumb-item"><a href="{% url 'financeiro:gateway-list' %}">Gateway</a></li>
+<li class="breadcrumb-item active">…</li>
+{% endblock %}
+
+{% block content %}
+<div class="lotesis-form-page">
+    <div class="p-3 bg-white shadow-sm rounded mb-3">
+        <h2 class="h5 mb-1 fw-semibold">{% if conta %}Editar — {{ conta.nome }}{% else %}Nova conta de Gateway{% endif %}</h2>
+        <div class="text-muted small">Configuração do provedor de pagamento</div>
+    </div>
+
+    {% if form.non_field_errors %}<div class="alert alert-danger alert-dismissible">{% for e in form.non_field_errors %}{{ e }}{% endfor %}</div>{% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3"><h6 class="mb-0 fw-semibold"><i class="feather-credit-card me-1"></i> Identificação</h6></div>
+            <div class="card-body pt-0">
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <label class="form-label">{{ form.nome.label }}</label>{{ form.nome }}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">{{ form.provedor.label }}</label>{{ form.provedor }}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">{{ form.ambiente.label }}</label>{{ form.ambiente }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3"><h6 class="mb-0 fw-semibold"><i class="feather-toggle-right me-1"></i> Meios de pagamento</h6></div>
+            <div class="card-body pt-0">
+                <div class="d-flex flex-wrap gap-4">
+                    <div class="form-check form-switch">
+                        {{ form.habilita_boleto }}
+                        <label class="form-check-label" for="{{ form.habilita_boleto.id_for_label }}">{{ form.habilita_boleto.label }}</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        {{ form.habilita_pix }}
+                        <label class="form-check-label" for="{{ form.habilita_pix.id_for_label }}">{{ form.habilita_pix.label }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h6 class="mb-0 fw-semibold"><i class="feather-lock me-1"></i> Configuração (JSON criptografado)</h6>
+            </div>
+            <div class="card-body pt-0">
+                <label class="form-label" for="{{ form.configuracao_texto.id_for_label }}">{{ form.configuracao_texto.label }}</label>
+                {{ form.configuracao_texto }}
+                <small class="text-muted d-block mt-1">Credenciais são criptografadas com Fernet e nunca retornam em texto claro após o envio.</small>
+                {% for error in form.configuracao_texto.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex flex-wrap gap-2 py-3">
+                <a href="{% url 'financeiro:gateway-list' %}" class="btn btn-light"><i class="feather-arrow-left me-1"></i> Voltar</a>
+                <button type="submit" class="btn btn-primary"><i class="feather-check me-1"></i> Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -29,6 +29,7 @@
 
                 {% if user.is_superuser %}
                 <li class="nxl-item nxl-caption"><label>Administração</label></li>
+                <li class="nxl-item"><a href="{% url 'financeiro:gateway-list' %}" class="nxl-link"><span class="nxl-micon"><i class="feather-pocket"></i></span><span class="nxl-mtext">Gateways</span></a></li>
                 <li class="nxl-item"><a href="{% url 'integracoes:list' %}" class="nxl-link"><span class="nxl-micon"><i class="feather-link"></i></span><span class="nxl-mtext">Integrações</span></a></li>
                 {% endif %}
 

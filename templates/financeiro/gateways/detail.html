@@ -1,0 +1,16 @@
+{% extends "base_app.html" %}
+
+{% block title %}Gateway — {{ conta.nome }}{% endblock %}
+{% block page_title %}{{ conta.nome }}{% endblock %}
+
+{% block content %}
+<dl class="row">
+    <dt class="col-sm-3">Provedor</dt><dd class="col-sm-9">{{ conta.provedor }}</dd>
+    <dt class="col-sm-3">Ambiente</dt><dd class="col-sm-9">{{ conta.ambiente }}</dd>
+    <dt class="col-sm-3">Boleto</dt><dd class="col-sm-9">{{ conta.habilita_boleto|yesno:'Sim,Não' }}</dd>
+    <dt class="col-sm-3">PIX</dt><dd class="col-sm-9">{{ conta.habilita_pix|yesno:'Sim,Não' }}</dd>
+    <dt class="col-sm-3">Situação</dt><dd class="col-sm-9">{{ conta.ativo|yesno:'Ativo,Inativo' }}</dd>
+    <dt class="col-sm-3">Última conexão</dt><dd class="col-sm-9">{{ conta.ultima_conexao_status|default:"-" }} ({{ conta.ultima_conexao_em|default:"-" }})</dd>
+</dl>
+<a class="btn btn-secondary btn-sm" href="{% url 'financeiro:gateway-list' %}">Voltar</a>
+{% endblock %}

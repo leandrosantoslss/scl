@@ -1,0 +1,46 @@
+{% extends "base_app.html" %}
+
+{% block title %}SCL - Contas de Gateway{% endblock %}
+{% block page_title %}Contas de Gateway{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'portal:home' %}">Início</a></li>
+<li class="breadcrumb-item active">Gateway</li>
+{% endblock %}
+
+{% block page_actions %}
+<a class="btn btn-primary btn-sm" href="{% url 'financeiro:gateway-create' %}"><i class="feather-plus me-1"></i> Nova conta</a>
+{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr><th>Nome</th><th>Provedor</th><th>Ambiente</th><th>Boleto</th><th>PIX</th><th>Situação</th><th></th></tr>
+            </thead>
+            <tbody>
+                {% for conta in contas %}
+                <tr>
+                    <td><a href="{% url 'financeiro:gateway-detail' conta.pk %}">{{ conta.nome }}</a></td>
+                    <td>{{ conta.provedor }}</td>
+                    <td>{{ conta.ambiente }}</td>
+                    <td>{{ conta.habilita_boleto|yesno:'Sim,Não' }}</td>
+                    <td>{{ conta.habilita_pix|yesno:'Ativo,Inativo' }}</td>
+                    <td>{% if conta.ativo %}<span class="badge bg-success">Ativa</span>{% else %}<span class="badge bg-danger">Inativa</span>{% endif %}</td>
+                    <td>
+                        <form method="post" action="{% url 'financeiro:gateway-toggle' conta.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-outline-{{ conta.ativo|yesno:'danger,success' }}">{{ conta.ativo|yesno:'Desativar,Ativar' }}</button>
+                        </form>
+                        <a href="{% url 'financeiro:gateway-editar' conta.pk %}" class="btn btn-sm btn-secondary">Editar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7" class="text-muted small p-3">Nenhuma conta de gateway cadastrada.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

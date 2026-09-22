@@ -251,3 +251,98 @@ def emissao_cancelar(request, pk):
         emissao.erro_normalizado = "Cancelamento com resultado indefinido."
         emissao.save()
     return redirect(reverse("financeiro:cobranca-detail", args=[emissao.cobranca_id]))
+
+
+from financeiro.forms import ContaGatewayForm
+from financeiro.services import contas_gateway
+import os, json as _json  # noqa: F401
+
+
+def _admin_required(request):
+    from django.core.exceptions import PermissionDenied
+
+    if not request.user.is_superuser and not request.user.groups.filter(name__in=["Administrador"]).exists():
+        raise PermissionDenied
+
+
+@login_required
+def gateway_list(request):
+    _admin_required(request)
+    contas = ContaGateway.objects.all().order_by("provedor", "nome")
+    return render(request, "financeiro/gateways/list.html", {"contas": contas})
+
+
+@login_required
+def gateway_create(request):
+    _admin_required(request)
+    if request.method == "POST":
+        form = ContaGatewayForm(data=request.POST)
+        if form.is_valid():
+            from financeiro.crypto import encrypt_config
+            if form.cleaned_data.get("configuracao_texto"):
+                try:
+                    import json as _js
+                    parsed = _js.loads(form.cleaned_data.get("configuracao_texto") or "{}")
+                except Exception:
+                    pass
+            form.save(commit=False)
+            config_parsed = form.cleaned_data.pop("configuracao_texto", {})
+            form.cleaned_data["configuracao_criptografada"] = ""
+            with transaction.atomic():
+                conta = form.save(commit=False)
+                conta.configuracao_criptografada = ""
+                # será substituído no salvar_credenciais
+                conta.full_clean()
+                conta.save()
+                from financeiro.services.contas_gateway import salvar_credenciais
+                if config_parsed:
+                    salvar_credenciais(conta=conta, configuracao=config_parsed, usuario=request.user)
+            return redirect(reverse("financeiro:gateway-list"))
+    else:
+        form = ContaGatewayForm()
+    return render(request, "financeiro/gateways/form.html", {"form": form})
+
+
+@login_required
+def gateway_detail(request, pk):
+    _admin_required(request)
+    conta = get_object_or_404(ContaGateway, pk=pk)
+    return render(request, "financeiro/gateways/detail.html", {"conta": conta})
+
+
+@login_required
+def gateway_editar(request, pk):
+    _admin_required(request)
+    conta = get_object_or_404(ContaGateway, pk=pk)
+    if request.method == "POST":
+        from financeiro.services.contas_gateway import salvar_credenciais
+
+        form = ContaGatewayForm(data=request.POST, instance=conta)
+        if form.is_valid():
+            form.save(commit=False)
+            form.instance.alterado_por = request.user
+            config_parsed = form.cleaned_data.pop("configuracao_texto", {})
+            from django.db import transaction
+
+            with transaction.atomic():
+                instance = form.save()
+                if config_parsed:
+                    salvar_credenciais(conta=instance, configuracao=config_parsed, usuario=request.user)
+            return redirect(reverse("financeiro:gateway-list"))
+    else:
+        form = ContaGatewayForm(instance=conta)
+    return render(request, "financeiro/gateways/form.html", {"form": form, "conta": conta})
+
+
+@login_required
+def gateway_ativar_desativar(request, pk):
+    _admin_required(request)
+    conta = get_object_or_404(ContaGateway, pk=pk)
+    if request.method == "POST":
+        from financeiro.services.contas_gateway import ativar_conta, desativar_conta
+
+        if conta.ativo:
+            desativar_conta(conta=conta, usuario=request.user, motivo="via portal")
+        else:
+            ativar_conta(conta=conta, usuario=request.user)
+    return redirect(reverse("financeiro:gateway-list"))

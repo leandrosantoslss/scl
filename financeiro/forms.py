@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django import forms
 
-from financeiro.models import ConfiguracaoFinanceira, Cobranca, Pagamento
+from financeiro.models import ConfiguracaoFinanceira, Cobranca, Pagamento, ContaGateway
 
 
 
@@ -72,3 +72,29 @@ class ConfiguracaoForm(WidgetBase):
         if carência < 0:
             raise forms.ValidationError("A carência não pode ser negativa.")
         return carência
+
+
+class ContaGatewayForm(forms.ModelForm):
+    configuracao_texto = forms.CharField(
+        required=False,
+        label="Configuração JSON (client_id, client_secret, pix_key, certificate_path, certificate_password)",
+        widget=forms.Textarea(attrs={"rows": 8}),
+    )
+
+    class Meta:
+        model = ContaGateway
+        fields = ("nome", "provedor", "ambiente", "habilita_boleto", "habilita_pix")
+
+    def clean_configuracao_texto(self):
+        import json as _json
+
+        texto = (self.cleaned_data.get("configuracao_texto") or "").strip()
+        if not texto:
+            return {}
+        try:
+            parsed = _json.loads(texto)
+        except Exception:
+            raise forms.ValidationError("Configuração deve ser um JSON válido.")
+        if not isinstance(parsed, dict):
+            raise forms.ValidationError("Configuração deve ser um objeto JSON ({}).")
+        return parsed
